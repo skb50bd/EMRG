@@ -8,7 +8,7 @@ At completion, the system is expected to be able to support numerous things onli
 
 ## Getting Started
 
-To test/run the system, on your machine, you must have [**.Net Core**](https://dotnet.microsoft.com/download) **SDK** (2.2 or higher) installed on your machine. The runtime and application is cross-platform (i.e. supports Windows, Mac and Linux environments). Download the OS-specific version for your machine.
+To test/run the system, on your machine, you must have [**.Net Core SDK**](https://dotnet.microsoft.com/download) (2.2 or higher) installed on your machine. The runtime and application is cross-platform (i.e. supports Windows, Mac and Linux environments). Download the OS-specific version for your machine.
 
 ## Build and Test
 
