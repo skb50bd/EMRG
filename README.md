@@ -14,9 +14,9 @@ To test/run the system, on your machine, you must have [**.Net Core SDK**](https
 
 Once you have the runtime installed and downloaded the source code, you are ready to go.
 
-+ Check if your `dotnet` command is working. Open up the terminal and enter `dotnet --version`. You should see something like this: `2.2.103`.
++ Check if your `dotnet` command is working. Open up the terminal and enter `dotnet --version`. You should see something like: `2.2.103`.
 
-+ On the project source folder, there is a scripts folder. You can run the `build.ps1` file (on Windows), or `build.sh` (on Linux/Mac) to build the solution. There is also a `run.ps1` / `run.sh` file that builds and runs the execuatable.
++ On the project source folder, there is a `scripts` folder. You can run the `build.ps1` file (on Windows), or `build.sh` (on Linux/Mac) to build the solution. There is also a `run.ps1` / `run.sh` file that builds and runs the execuatable.
 
 ## Contact
 
