@@ -1,20 +1,27 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# EMRG
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Introduction
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+The project is a simple University Management System.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+At completion, the system is expected to be able to support numerous things online.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Getting Started
+
+To test/run the system, on your machine, you must have [**.Net Core**](https://dotnet.microsoft.com/download) **SDK** (2.2 or higher) installed on your machine. The runtime and application is cross-platform (i.e. supports Windows, Mac and Linux environments). Download the OS-specific version for your machine.
+
+## Build and Test
+
+Once you have the runtime installed and downloaded the source code, you are ready to go.
+
++ Check if your `dotnet` command is working. Open up the terminal and enter `dotnet --version`. You should see something like this: `2.2.103`.
+
++ On the project source folder, there is a scripts folder. You can run the `build.ps1` file (on Windows), or `build.sh` (on Linux/Mac) to build the solution. There is also a `run.ps1` / `run.sh` file that builds and runs the execuatable.
+
+## Contact
+
+Project owners:
+
++ [Abdullah - Al - Haris Shakib](mailto:skb50bd@gmail.com)
++ [Md. Ashiful Arefin](mailto:arefin.ashiful@gmail.com)
++ [Syed Saiful Islam Asik](mailto:syed@example.com)
