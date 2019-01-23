@@ -18,6 +18,11 @@ Once you have the runtime installed and downloaded the source code, you are read
 
 + On the project source folder, there is a `scripts` folder. You can run the `build.ps1` file (on Windows), or `build.sh` (on Linux/Mac) to build the solution. There is also a `run.ps1` / `run.sh` file that builds and runs the execuatable.
 
+## Documentation
+
++ [Licence](LICENSE)
++ [Project Proposal](./Docs/Project-Proposal.md)
+
 ## Contact
 
 Project owners:

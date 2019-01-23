@@ -94,13 +94,13 @@ Here are the tools and libraries we will use to develop the project:
 
 2. Web Framework / Application Model
 
-   We chose **ASP.Net Core** 2.2 for the application framework. This framework is fast and high performant. Thus, many users can use the application concurrently. We will use **Razor Pages** app-model for its simplicity and scalability.
+   We chose **ASP .Net Core** 2.2 for the application framework. This framework is fast and high performant. Thus, many users can use the application concurrently. We will use **Razor Pages** app-model for its simplicity and scalability.
 
 3. UI Framework
 
    Bootstrap 4
 
-4. Project Management &amp; Source Control
+4. Project Management & Source Control
 
    **Azure DevOps** (with Git), formally known as _Visual Studio Team Services._ Project Page: [Link](https://dev.azure.com/skb50bd/CSE411)
 
