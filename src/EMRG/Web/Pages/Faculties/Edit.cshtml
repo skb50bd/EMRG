@@ -14,9 +14,9 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Faculty.Initials" class="control-label"></label>
-                <input asp-for="Faculty.Initials" class="form-control" />
-                <span asp-validation-for="Faculty.Initials" class="text-danger"></span>
+                <label asp-for="Faculty.Initial" class="control-label"></label>
+                <input asp-for="Faculty.Initial" class="form-control" />
+                <span asp-validation-for="Faculty.Initial" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Faculty.Designation" class="control-label"></label>
@@ -27,11 +27,6 @@
                 <label asp-for="Faculty.DepartmentId" class="control-label"></label>
                 <select asp-for="Faculty.DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
                 <span asp-validation-for="Faculty.DepartmentId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Faculty.IsRemoved" /> @Html.DisplayNameFor(model => model.Faculty.IsRemoved)
-                </label>
             </div>
             <input type="hidden" asp-for="Faculty.Id" />
             <div class="form-group">

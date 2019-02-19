@@ -1,27 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Data.Persistence;
-using Domain;
 
 namespace Web.Pages.Faculties
 {
     public class CreateModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public CreateModel(Data.Persistence.AppDbContext context)
+        public CreateModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-        ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name");
+            ViewData["DepartmentId"] = 
+                new SelectList(
+                    await _db.Departments.GetAll(), 
+                    nameof(Department.Id), 
+                    nameof(Department.Name));
             return Page();
         }
 
@@ -35,8 +39,8 @@ namespace Web.Pages.Faculties
                 return Page();
             }
 
-            _context.Faculties.Add(Faculty);
-            await _context.SaveChangesAsync();
+            _db.Faculties.Add(Faculty);
+            await _db.CompleteAsync();
 
             return RedirectToPage("./Index");
         }

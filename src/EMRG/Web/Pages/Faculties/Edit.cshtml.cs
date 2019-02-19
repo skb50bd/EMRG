@@ -1,23 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
-using Domain;
+
+using SharedLibrary;
 
 namespace Web.Pages.Faculties
 {
     public class EditModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public EditModel(Data.Persistence.AppDbContext context)
+        public EditModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -30,14 +32,17 @@ namespace Web.Pages.Faculties
                 return NotFound();
             }
 
-            Faculty = await _context.Faculties
-                .Include(f => f.Department).FirstOrDefaultAsync(m => m.Id == id);
+            Faculty = await _db.Faculties.GetById((int)id);
 
             if (Faculty == null)
             {
                 return NotFound();
             }
-           ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id");
+            ViewData["DepartmentId"] = 
+                new SelectList(
+                    await _db.Departments.GetAll(), 
+                    nameof(Department.Id), 
+                    nameof(Department.Name));
             return Page();
         }
 
@@ -48,15 +53,19 @@ namespace Web.Pages.Faculties
                 return Page();
             }
 
-            _context.Attach(Faculty).State = EntityState.Modified;
+            var original = await _db.Faculties.GetById(Faculty.Id);
+            var meta = original.Meta;
+            meta.Updated(User.Identity.Name);
+            original.SetValuesFrom(Faculty);
+            original.Meta = meta;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _db.CompleteAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!FacultyExists(Faculty.Id))
+                if (!await FacultyExistsAsync(Faculty.Id))
                 {
                     return NotFound();
                 }
@@ -69,9 +78,9 @@ namespace Web.Pages.Faculties
             return RedirectToPage("./Index");
         }
 
-        private bool FacultyExists(int id)
+        private async Task<bool> FacultyExistsAsync(int id)
         {
-            return _context.Faculties.Any(e => e.Id == id);
+            return await _db.Faculties.Exists(id);
         }
     }
 }

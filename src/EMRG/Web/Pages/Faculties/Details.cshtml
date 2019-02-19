@@ -12,10 +12,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Faculty.Initials)
+            @Html.DisplayNameFor(model => model.Faculty.Initial)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Faculty.Initials)
+            @Html.DisplayFor(model => model.Faculty.Initial)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Faculty.Designation)
@@ -27,13 +27,7 @@
             @Html.DisplayNameFor(model => model.Faculty.Department)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Faculty.Department.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Faculty.IsRemoved)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Faculty.IsRemoved)
+            @Html.DisplayFor(model => model.Faculty.Department.Name)
         </dd>
     </dl>
 </div>

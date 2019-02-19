@@ -4,16 +4,14 @@ using Data.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data.Migrations
+namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190219122224_Initial-Create")]
-    partial class InitialCreate
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +81,7 @@ namespace Data.Migrations
 
                     b.Property<string>("Designation");
 
-                    b.Property<string>("Initials");
+                    b.Property<string>("Initial");
 
                     b.Property<bool>("IsRemoved");
 
@@ -108,9 +106,9 @@ namespace Data.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<DateTimeOffset>("UpdatedAt");
 
-                    b.Property<DateTimeOffset>("UpdatetAt");
+                    b.Property<string>("UpdatedBy");
 
                     b.HasKey("Id");
 

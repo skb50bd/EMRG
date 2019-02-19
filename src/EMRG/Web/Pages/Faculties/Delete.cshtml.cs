@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
-using Domain;
 
 namespace Web.Pages.Faculties
 {
     public class DeleteModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public DeleteModel(Data.Persistence.AppDbContext context)
+        public DeleteModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -29,9 +28,7 @@ namespace Web.Pages.Faculties
                 return NotFound();
             }
 
-            Faculty = await _context.Faculties
-                .Include(f => f.Department).FirstOrDefaultAsync(m => m.Id == id);
-
+            Faculty = await _db.Faculties.GetById((int)id);
             if (Faculty == null)
             {
                 return NotFound();
@@ -46,12 +43,11 @@ namespace Web.Pages.Faculties
                 return NotFound();
             }
 
-            Faculty = await _context.Faculties.FindAsync(id);
+            Faculty = await _db.Faculties.GetById((int)id);
 
             if (Faculty != null)
             {
-                _context.Faculties.Remove(Faculty);
-                await _context.SaveChangesAsync();
+                await _db.Faculties.Remove((int)id);
             }
 
             return RedirectToPage("./Index");

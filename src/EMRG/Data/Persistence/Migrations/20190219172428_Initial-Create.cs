@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Data.Migrations
+namespace Data.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -59,7 +59,7 @@ namespace Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatetAt = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     UpdatedBy = table.Column<string>(nullable: true)
                 },
@@ -225,7 +225,7 @@ namespace Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
                     MetaId = table.Column<int>(nullable: true),
-                    Initials = table.Column<string>(nullable: true),
+                    Initial = table.Column<string>(nullable: true),
                     Designation = table.Column<string>(nullable: true),
                     DepartmentId = table.Column<int>(nullable: false)
                 },

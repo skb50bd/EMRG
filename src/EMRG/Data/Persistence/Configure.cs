@@ -21,6 +21,8 @@ namespace Data.Persistence
                         .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddTransient<ITrackingRepository<Department>, TrackingRepository<Department>>();
+            services.AddTransient<ITrackingRepository<Faculty>, FacultyRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

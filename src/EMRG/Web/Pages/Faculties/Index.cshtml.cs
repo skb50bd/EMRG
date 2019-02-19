@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
+
+using Data.Core;
+
 using Domain;
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages.Faculties
 {
     public class IndexModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public IndexModel(Data.Persistence.AppDbContext context)
+        public IndexModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
-        public IList<Faculty> Faculty { get;set; }
+        public IList<Faculty> Faculties { get;set; }
 
         public async Task OnGetAsync()
         {
-            Faculty = await _context.Faculties
-                .Include(f => f.Department).ToListAsync();
+            Faculties = (await _db.Faculties.GetAll()).ToList();
         }
     }
 }

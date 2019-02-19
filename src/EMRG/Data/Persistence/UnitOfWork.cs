@@ -11,11 +11,15 @@ namespace Data.Persistence
         private readonly AppDbContext _db;
 
         public ITrackingRepository<Department> Departments { get; }
+        public ITrackingRepository<Faculty> Faculties { get; }
 
-        public UnitOfWork(AppDbContext db, ITrackingRepository<Department> departments)
+        public UnitOfWork(AppDbContext db, 
+            ITrackingRepository<Department> departments,
+            ITrackingRepository<Faculty> faculties)
         {
             _db = db;
             Departments = departments;
+            Faculties = faculties;
         }
         public void Complete()
         {
