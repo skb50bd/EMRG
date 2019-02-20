@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
-using Domain;
-
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Data.Persistence;
+using Domain;
 
-namespace Web.Admin.Pages.Departments
+namespace Web.Areas.Admin.Pages.Departments
 {
     public class IndexModel : PageModel
     {
@@ -17,7 +19,7 @@ namespace Web.Admin.Pages.Departments
             _context = context;
         }
 
-        public IList<Department> Department { get;set; }
+        public IList<Department> Department { get; set; }
 
         public async Task OnGetAsync()
         {

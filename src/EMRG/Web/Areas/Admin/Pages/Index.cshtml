@@ -1,10 +1,27 @@
 ﻿@page
 @model Web.Areas.Admin.Pages.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
+    //Layout = "./Shared/_Layout";
     ViewBag.Title = "Admin";
 }
 
-<div class="jumbotron">
-    <h1 class="display-1">Admin Home</h1>
-</div>
+@*<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <!--<partial name="_Sidebar" />-->
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    
+
+
+    <!-- /#page-content-wrapper -->
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</div>*@
