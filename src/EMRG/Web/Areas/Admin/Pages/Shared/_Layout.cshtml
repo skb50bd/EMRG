@@ -26,7 +26,16 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
 
-        @RenderBody()
+        
+
+        <div id="page-content-wrapper">
+
+            <partial name="_Nav" />
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
         <!-- /#page-content-wrapper -->
         <!-- Menu Toggle Script -->
         <script>
