@@ -4,13 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Data.Persistence;
+using Domain;
 
 namespace Web.Areas.Admin.Pages.Departments
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        private readonly Data.Persistence.AppDbContext _context;
+
+        public IndexModel(Data.Persistence.AppDbContext context)
         {
+            _context = context;
+        }
+
+        public IList<Department> Department { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            Department = await _context.Departments.ToListAsync();
         }
     }
 }
