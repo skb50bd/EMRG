@@ -10,7 +10,7 @@ using Domain;
 
 using Microsoft.EntityFrameworkCore;
 
-using SharedLibrary;
+using Brotal.Extensions;
 
 namespace Data.Persistence
 {

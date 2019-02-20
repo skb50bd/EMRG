@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
+    <PackageReference Include="Brotal.Extensions" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>

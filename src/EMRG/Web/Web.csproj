@@ -10,14 +10,50 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Brotal.Extensions" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Pages\Departments\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Pages\Departments\Create.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Pages\Departments\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Pages\Departments\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Pages\Departments\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Pages\Departments\Edit.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Pages\Departments\Delete.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Pages\Departments\Details.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Pages\Departments\Edit.cshtml" />
   </ItemGroup>
 
 </Project>

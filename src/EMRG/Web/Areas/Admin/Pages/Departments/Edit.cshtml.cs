@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Persistence;
 using Domain;
 
-namespace Web.Pages.Departments
+namespace Web.Admin.Pages.Departments
 {
     public class EditModel : PageModel
     {

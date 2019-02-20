@@ -38,7 +38,7 @@ namespace Web.Pages.Faculties
             {
                 return Page();
             }
-
+            Faculty.Meta = Metadata.Created(User.Identity.Name);
             _db.Faculties.Add(Faculty);
             await _db.CompleteAsync();
 
