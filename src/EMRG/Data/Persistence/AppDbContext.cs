@@ -1,4 +1,6 @@
-﻿using Domain;
+﻿using System.Linq;
+
+using Domain;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +17,6 @@ namespace Data.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Owned<Metadata>();
-            builder.Entity<Metadata>().HasKey(m => m.Id);
-
-
 
             builder.Entity<Room>()
                 .HasMany(r => r.Sections)
@@ -35,10 +33,20 @@ namespace Data.Persistence
                 .HasOne(s => s.Program)
                 .WithMany(p => p.Students)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            var metas =
+                builder.Model.GetEntityTypes().SelectMany(
+                    d => d.GetNavigations())
+                        .Where(p => p.Name == nameof(Document.Meta));
+
+            foreach (var p in metas)
+            {
+                p.IsEagerLoaded = true;
+            }
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Faculty> Faculties{ get; set; }
+        public DbSet<Faculty> Faculties { get; set; }
     }
 }
