@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-using SharedLibrary;
+using Brotal.Extensions;
 
 namespace Web.Pages.Faculties
 {

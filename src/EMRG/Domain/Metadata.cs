@@ -1,6 +1,6 @@
 ﻿using System;
 
-using SharedLibrary;
+using Brotal.Extensions;
 
 namespace Domain
 {

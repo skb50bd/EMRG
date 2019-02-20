@@ -19,7 +19,23 @@
     <link rel="stylesheet" href="~/css/simple-sidebar.css" />
 </head>
 <body>
-    @RenderBody()
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <partial name="_Sidebar" />
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+
+        @RenderBody()
+        <!-- /#page-content-wrapper -->
+        <!-- Menu Toggle Script -->
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+    </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

@@ -47,6 +47,7 @@ namespace Web.Pages.Faculties
 
             if (Faculty != null)
             {
+                Faculty.Meta.Updated(User.Identity.Name);
                 await _db.Faculties.Remove((int)id);
             }
 

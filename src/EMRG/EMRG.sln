@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{C10864D1-8FCA-41DA-A7E0-60F7368BDBBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{C10864D1-8FCA-41DA-A7E0-60F7368BDBBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{E9E742F4-3677-4A79-9387-E5F82DFD5984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{E9E742F4-3677-4A79-9387-E5F82DFD5984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{59B227E6-097B-445D-9E1E-F42966A1E4B3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{4F5A7894-585F-4F47-A6CC-4EF23349F8B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{59B227E6-097B-445D-9E1E-F42966A1E4B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{59B227E6-097B-445D-9E1E-F42966A1E4B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59B227E6-097B-445D-9E1E-F42966A1E4B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59B227E6-097B-445D-9E1E-F42966A1E4B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F5A7894-585F-4F47-A6CC-4EF23349F8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F5A7894-585F-4F47-A6CC-4EF23349F8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F5A7894-585F-4F47-A6CC-4EF23349F8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F5A7894-585F-4F47-A6CC-4EF23349F8B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
