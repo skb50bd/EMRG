@@ -22,6 +22,7 @@ namespace Data.Persistence
 
             services.AddTransient<ITrackingRepository<Department>, TrackingRepository<Department>>();
             services.AddTransient<ITrackingRepository<Faculty>, FacultyRepository>();
+            services.AddTransient<ITrackingRepository<Program>, ProgramRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             return services;

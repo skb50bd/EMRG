@@ -8,6 +8,7 @@ namespace Data.Core
     {
         ITrackingRepository<Department> Departments { get; }
         ITrackingRepository<Faculty> Faculties { get; }
+        ITrackingRepository<Program> Programs { get; }
         void Complete();
 
         Task CompleteAsync();

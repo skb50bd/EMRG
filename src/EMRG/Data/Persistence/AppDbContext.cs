@@ -48,5 +48,6 @@ namespace Data.Persistence
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Program> Programs { get; set; }
     }
 }

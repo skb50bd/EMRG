@@ -30,7 +30,7 @@ namespace Web.Admin.Pages.Departments
             {
                 return Page();
             }
-
+            Department.Meta = Metadata.Created(User.Identity.Name);
             _context.Departments.Add(Department);
             await _context.SaveChangesAsync();
 
