@@ -17,8 +17,17 @@
            class="list-group-item list-group-item-action bg-light">
             Faculties
         </a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Students</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Courses</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Rooms</a>
-    </div>
+        <a asp-area="Admin" asp-page="/Students/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Students
+        </a>
+
+        <a asp-area="Admin" asp-page="/Courses/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Courses
+        </a>          
+        <a asp-area="Admin" asp-page="/Rooms/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Rooms
+        </a></div>
 </div>

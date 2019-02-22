@@ -4,14 +4,16 @@ using Data.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190222143345_courses-added")]
+    partial class coursesadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,7 +160,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("MetaId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("Domain.Section", b =>
@@ -181,7 +183,7 @@ namespace Data.Persistence.Migrations
 
                     b.Property<string>("Schedule");
 
-                    b.Property<int>("TimeSlotId");
+                    b.Property<int?>("TimeSlotId");
 
                     b.HasKey("Id");
 
@@ -516,8 +518,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasOne("Domain.TimeSlot", "TimeSlot")
                         .WithMany()
-                        .HasForeignKey("TimeSlotId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TimeSlotId");
                 });
 
             modelBuilder.Entity("Domain.Student", b =>

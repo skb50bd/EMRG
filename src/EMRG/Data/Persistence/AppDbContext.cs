@@ -50,5 +50,7 @@ namespace Data.Persistence
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Room> Rooms { get; set; }
     }
 }
