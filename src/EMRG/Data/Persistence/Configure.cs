@@ -24,7 +24,7 @@ namespace Data.Persistence
             services.AddTransient<ITrackingRepository<Faculty>, FacultyRepository>();
             services.AddTransient<ITrackingRepository<Program>, ProgramRepository>();
             services.AddTransient<ITrackingRepository<Student>, StudentRepository>();
-            services.AddTransient<ITrackingRepository<Course>, TrackingRepository<Course>>();
+            services.AddTransient<ITrackingRepository<Course>, CourseRepository>();
             services.AddTransient<ITrackingRepository<Room>, TrackingRepository<Room>>();
             services.AddTransient<ITrackingRepository<Semester>, TrackingRepository<Semester>>();
             services.AddTransient<ITrackingRepository<Section>, TrackingRepository<Section>>();

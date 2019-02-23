@@ -10,7 +10,7 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -28,9 +28,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Section[0].Course)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Section[0].IsRemoved)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -41,19 +38,16 @@
                 @Html.DisplayFor(modelItem => item.Number)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Semester.Id)
+                @Html.DisplayFor(modelItem => item.Semester.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Room.Id)
+                @Html.DisplayFor(modelItem => item.Room.Number)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Faculty.Id)
+                @Html.DisplayFor(modelItem => item.Faculty.Initial)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Course.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsRemoved)
+                @Html.DisplayFor(modelItem => item.Course.Code)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

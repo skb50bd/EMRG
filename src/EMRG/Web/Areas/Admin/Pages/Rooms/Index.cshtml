@@ -16,9 +16,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Room[0].Number)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Room[0].IsRemoved)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -27,9 +24,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsRemoved)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

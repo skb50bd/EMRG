@@ -32,11 +32,6 @@
                 <input asp-for="Program.RequiredCredits" class="form-control" />
                 <span asp-validation-for="Program.RequiredCredits" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Program.IsRemoved" /> @Html.DisplayNameFor(model => model.Program.IsRemoved))
-                </label>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
