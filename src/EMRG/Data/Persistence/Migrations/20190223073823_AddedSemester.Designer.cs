@@ -4,14 +4,16 @@ using Data.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190223073823_AddedSemester")]
+    partial class AddedSemester
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,6 +181,8 @@ namespace Data.Persistence.Migrations
 
                     b.Property<int>("RoomId");
 
+                    b.Property<int>("ScheduleId");
+
                     b.Property<int>("SemesterId");
 
                     b.HasKey("Id");
@@ -214,7 +218,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("MetaId");
 
-                    b.ToTable("Semesters");
+                    b.ToTable("Semester");
                 });
 
             modelBuilder.Entity("Domain.Student", b =>

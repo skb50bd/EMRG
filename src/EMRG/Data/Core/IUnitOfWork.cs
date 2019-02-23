@@ -12,6 +12,8 @@ namespace Data.Core
         ITrackingRepository<Student> Students { get; }
         ITrackingRepository<Course> Courses { get; }
         ITrackingRepository<Room> Rooms { get; }
+        ITrackingRepository<Semester> Semesters { get; }
+        ITrackingRepository<Section> Sections { get; }
 
         void Complete();
 

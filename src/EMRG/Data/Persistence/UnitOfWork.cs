@@ -16,6 +16,8 @@ namespace Data.Persistence
         public ITrackingRepository<Student> Students { get; }
         public ITrackingRepository<Course> Courses { get; }
         public ITrackingRepository<Room> Rooms { get; }
+        public ITrackingRepository<Semester> Semesters { get; }
+        public ITrackingRepository<Section> Sections { get; }
 
 
         public UnitOfWork(AppDbContext db, 
@@ -24,7 +26,9 @@ namespace Data.Persistence
             ITrackingRepository<Program> programs,
             ITrackingRepository<Student> students,
             ITrackingRepository<Course> courses,
-            ITrackingRepository<Room> rooms)
+            ITrackingRepository<Room> rooms,
+            ITrackingRepository<Semester> semesters,
+            ITrackingRepository<Section> sections)
         {
             _db = db;
             Departments = departments;
@@ -33,6 +37,8 @@ namespace Data.Persistence
             Students = students;
             Courses = courses;
             Rooms = rooms;
+            Semesters = semesters;
+            Sections = sections;
         }
         public void Complete()
         {
