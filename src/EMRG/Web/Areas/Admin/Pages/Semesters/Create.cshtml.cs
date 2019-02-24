@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Data.Persistence;
-using Domain;
 
 namespace Web.Areas.Admin.Pages.Semesters
 {
     public class CreateModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public CreateModel(Data.Persistence.AppDbContext context)
+        public CreateModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         public IActionResult OnGet()
@@ -33,9 +33,9 @@ namespace Web.Areas.Admin.Pages.Semesters
             {
                 return Page();
             }
-
-            _context.Semesters.Add(Semester);
-            await _context.SaveChangesAsync();
+            Semester.Meta = Metadata.Created(User.Identity.Name);
+            _db.Semesters.Add(Semester);
+            await _db.CompleteAsync();
 
             return RedirectToPage("./Index");
         }

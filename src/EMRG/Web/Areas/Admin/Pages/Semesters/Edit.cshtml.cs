@@ -1,23 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
-using Domain;
+
+using Brotal.Extensions;
 
 namespace Web.Areas.Admin.Pages.Semesters
 {
     public class EditModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public EditModel(Data.Persistence.AppDbContext context)
+        public EditModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -30,7 +32,7 @@ namespace Web.Areas.Admin.Pages.Semesters
                 return NotFound();
             }
 
-            Semester = await _context.Semesters.FirstOrDefaultAsync(m => m.Id == id);
+            Semester = await _db.Semesters.GetById((int)id);
 
             if (Semester == null)
             {
@@ -46,15 +48,19 @@ namespace Web.Areas.Admin.Pages.Semesters
                 return Page();
             }
 
-            _context.Attach(Semester).State = EntityState.Modified;
+            var original = await _db.Semesters.GetById(Semester.Id);
+            var meta = original.Meta;
+            meta.Updated(User.Identity.Name);
+            original.SetValuesFrom(Semester);
+            original.Meta = meta;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _db.CompleteAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!SemesterExists(Semester.Id))
+                if (!await SemesterExistsAsync(Semester.Id))
                 {
                     return NotFound();
                 }
@@ -67,9 +73,9 @@ namespace Web.Areas.Admin.Pages.Semesters
             return RedirectToPage("./Index");
         }
 
-        private bool SemesterExists(int id)
+        private async Task<bool> SemesterExistsAsync(int id)
         {
-            return _context.Semesters.Any(e => e.Id == id);
+            return await _db.Semesters.Exists(id);
         }
     }
 }

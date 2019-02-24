@@ -35,6 +35,7 @@ namespace Data.Persistence
             builder.Entity<Section>()
                 .OwnsOne(s => s.Schedule, 
                     sc => sc.OwnsMany(st => st.TimeSlots, ts => ts.HasKey(t => t.Id)));
+
             
             var metas =
                 builder.Model.GetEntityTypes().SelectMany(
