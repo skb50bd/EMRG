@@ -1,14 +1,17 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain
-{
-    public class TimeSlot : TrackedEntity
+namespace Domain {
+    public class TimeSlot : Entity
     {
-        public DateTimeOffset StartTime { get; set; }
-        public DateTimeOffset EndTime { get; set; }
-        public int RoomId { get; set; }
-        public Room Room { get; set; }
-        public int SectionId { get; set; }
-        public Section Section { get; set; }
+        [Required]
+        public DayOfWeek DayOfWeek { get; set; }
+
+        [DataType(DataType.Time)]
+        [Required]
+        public DateTime StartTime { get; set; }
+
+        [DataType(DataType.Time)]
+        public DateTime EndTime { get; set; }
     }
 }

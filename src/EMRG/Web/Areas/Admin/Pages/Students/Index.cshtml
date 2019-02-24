@@ -1,0 +1,72 @@
+﻿@page
+@model Web.Areas.Admin.Pages.Students.IndexModel
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Roll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Program)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].AdmissionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].CreditsAttained)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].CreditsTaken)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Student) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Roll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Program.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdmissionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditsAttained)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditsTaken)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

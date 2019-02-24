@@ -12,14 +12,33 @@ namespace Data.Persistence
 
         public ITrackingRepository<Department> Departments { get; }
         public ITrackingRepository<Faculty> Faculties { get; }
+        public ITrackingRepository<Program> Programs { get; }
+        public ITrackingRepository<Student> Students { get; }
+        public ITrackingRepository<Course> Courses { get; }
+        public ITrackingRepository<Room> Rooms { get; }
+        public ITrackingRepository<Semester> Semesters { get; }
+        public ITrackingRepository<Section> Sections { get; }
+
 
         public UnitOfWork(AppDbContext db, 
             ITrackingRepository<Department> departments,
-            ITrackingRepository<Faculty> faculties)
+            ITrackingRepository<Faculty> faculties,
+            ITrackingRepository<Program> programs,
+            ITrackingRepository<Student> students,
+            ITrackingRepository<Course> courses,
+            ITrackingRepository<Room> rooms,
+            ITrackingRepository<Semester> semesters,
+            ITrackingRepository<Section> sections)
         {
             _db = db;
             Departments = departments;
             Faculties = faculties;
+            Programs = programs;
+            Students = students;
+            Courses = courses;
+            Rooms = rooms;
+            Semesters = semesters;
+            Sections = sections;
         }
         public void Complete()
         {

@@ -47,7 +47,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("ProgramId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -139,7 +139,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("MetaId");
 
-                    b.ToTable("Program");
+                    b.ToTable("Programs");
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -158,7 +158,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("MetaId");
 
-                    b.ToTable("Room");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Domain.Section", b =>
@@ -179,6 +179,8 @@ namespace Data.Persistence.Migrations
 
                     b.Property<int>("RoomId");
 
+                    b.Property<int>("SemesterId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
@@ -189,7 +191,30 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Section");
+                    b.HasIndex("SemesterId");
+
+                    b.ToTable("Sections");
+                });
+
+            modelBuilder.Entity("Domain.Semester", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.Property<int?>("MetaId");
+
+                    b.Property<int>("Season");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MetaId");
+
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Domain.Student", b =>
@@ -228,7 +253,7 @@ namespace Data.Persistence.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -490,6 +515,62 @@ namespace Data.Persistence.Migrations
                         .WithMany("Sections")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Semester", "Semester")
+                        .WithMany()
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("Domain.Schedule", "Schedule", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<bool>("IsRemoved");
+
+                            b1.HasKey("Id");
+
+                            b1.ToTable("Sections");
+
+                            b1.HasOne("Domain.Section")
+                                .WithOne("Schedule")
+                                .HasForeignKey("Domain.Schedule", "Id")
+                                .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.OwnsMany("Domain.TimeSlot", "TimeSlots", b2 =>
+                                {
+                                    b2.Property<int>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                                    b2.Property<int>("DayOfWeek");
+
+                                    b2.Property<DateTime>("EndTime");
+
+                                    b2.Property<int>("ScheduleId");
+
+                                    b2.Property<DateTime>("StartTime");
+
+                                    b2.HasKey("Id");
+
+                                    b2.HasIndex("ScheduleId");
+
+                                    b2.ToTable("TimeSlot");
+
+                                    b2.HasOne("Domain.Schedule")
+                                        .WithMany("TimeSlots")
+                                        .HasForeignKey("ScheduleId")
+                                        .OnDelete(DeleteBehavior.Cascade);
+                                });
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Semester", b =>
+                {
+                    b.HasOne("Domain.Metadata", "Meta")
+                        .WithMany()
+                        .HasForeignKey("MetaId");
                 });
 
             modelBuilder.Entity("Domain.Student", b =>

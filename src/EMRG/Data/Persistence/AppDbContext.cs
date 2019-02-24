@@ -11,8 +11,7 @@ namespace Data.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
-        {
-        }
+        { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,13 +26,16 @@ namespace Data.Persistence
                 .HasMany(f => f.Sections)
                 .WithOne(s => s.Faculty)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
+            
             builder.Entity<Student>()
                 .HasOne(s => s.Program)
                 .WithMany(p => p.Students)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Section>()
+                .OwnsOne(s => s.Schedule, 
+                    sc => sc.OwnsMany(st => st.TimeSlots, ts => ts.HasKey(t => t.Id)));
+            
             var metas =
                 builder.Model.GetEntityTypes().SelectMany(
                     d => d.GetNavigations())
@@ -46,5 +48,11 @@ namespace Data.Persistence
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Program> Programs { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Semester> Semesters { get; set; }
+        public DbSet<Section> Sections { get; set; }
     }
 }

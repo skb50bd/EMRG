@@ -1,21 +1,40 @@
 ﻿<div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Start Bootstrap </div>
+    <div class="sidebar-heading">Admin Panel </div>
     <div class="list-group list-group-flush">
-        <a asp-area="Admin" asp-page="Index"
+        <a asp-area="Admin" asp-page="/Semesters/Index"
            class="list-group-item list-group-item-action bg-light">
-            Dashboard
+            Semesters
         </a>
         <a asp-area="Admin" asp-page="/Departments/Index"
            class="list-group-item list-group-item-action bg-light">
             Departments
         </a>
-
+        <a asp-area="Admin" asp-page="/Programs/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Programs
+        </a>
         <a asp-area="Admin" asp-page="/Faculties/Index"
            class="list-group-item list-group-item-action bg-light">
             Faculties
         </a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Students</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Courses</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Rooms</a>
+        <a asp-area="Admin" asp-page="/Students/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Students
+        </a>
+
+        <a asp-area="Admin" asp-page="/Courses/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Courses
+        </a>
+        <a asp-area="Admin" asp-page="/Rooms/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Rooms
+        </a>
+        <a asp-area="Admin" asp-page="/Sections/Index"
+           class="list-group-item list-group-item-action bg-light">
+            Sections
+        </a>
+    
     </div>
+        
 </div>
