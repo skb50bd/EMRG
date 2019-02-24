@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Persistence\Migrations\20190224161123_AddedEnrollments.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Brotal.Extensions" Version="0.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />

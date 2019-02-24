@@ -36,7 +36,11 @@ namespace Data.Persistence
                 .OwnsOne(s => s.Schedule, 
                     sc => sc.OwnsMany(st => st.TimeSlots, ts => ts.HasKey(t => t.Id)));
 
-            
+            builder.Entity<CourseEnrollment>()
+                .HasOne(c => c.Student)
+                .WithMany(s => s.Enrollments)
+                .OnDelete(DeleteBehavior.Restrict);
+
             var metas =
                 builder.Model.GetEntityTypes().SelectMany(
                     d => d.GetNavigations())
