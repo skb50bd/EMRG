@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data.Persistence.Migrations
+namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -106,15 +106,29 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired();
+
                     b.Property<int>("DepartmentId");
 
                     b.Property<string>("Designation");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<string>("Initial");
 
                     b.Property<bool>("IsRemoved");
 
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
                     b.Property<int?>("MetaId");
+
+                    b.Property<string>("Phone");
 
                     b.HasKey("Id");
 
@@ -252,15 +266,29 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired();
+
                     b.Property<DateTimeOffset>("AdmissionDate");
 
                     b.Property<DateTimeOffset>("DateOfBirth");
 
                     b.Property<int>("DepartmentId");
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
                     b.Property<bool>("IsRemoved");
 
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
                     b.Property<int?>("MetaId");
+
+                    b.Property<string>("Phone");
 
                     b.Property<int>("ProgramId");
 
@@ -450,12 +478,6 @@ namespace Data.Persistence.Migrations
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("Phone");
 
                     b.Property<int>("Role");
 

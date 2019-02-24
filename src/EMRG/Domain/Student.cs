@@ -5,7 +5,8 @@ using System.Linq;
 
 namespace Domain
 {
-    public class Student : Document
+
+    public class Student : Person
     {
         [Display(Name = "Student Id")]
         public string StudentId => 
@@ -24,11 +25,15 @@ namespace Domain
         public int ProgramId { get; set; }
         public virtual Program Program { get; set; }
         
+        [Display(Name = "Admission Date")]
+        [DataType(DataType.Date)]
         public DateTimeOffset AdmissionDate { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Date of Birth")]
         public DateTimeOffset DateOfBirth { get; set; }
 
+        public int Age => (int)DateTime.Today.Subtract(DateOfBirth.DateTime).TotalDays;
 
         [Display(Name = "Credits Taken")]
         public int CreditsTaken => 

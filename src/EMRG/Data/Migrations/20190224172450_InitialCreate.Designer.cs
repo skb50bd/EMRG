@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data.Persistence.Migrations
+namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190223075926_addedSemester2")]
-    partial class addedSemester2
+    [Migration("20190224172450_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,35 @@ namespace Data.Persistence.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("Domain.CourseEnrollment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Grade");
+
+                    b.Property<float>("GradePoint");
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.Property<int?>("MetaId");
+
+                    b.Property<int>("SectionId");
+
+                    b.Property<int>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MetaId");
+
+                    b.HasIndex("SectionId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("CourseEnrollment");
+                });
+
             modelBuilder.Entity("Domain.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -79,15 +108,29 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired();
+
                     b.Property<int>("DepartmentId");
 
                     b.Property<string>("Designation");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<string>("Initial");
 
                     b.Property<bool>("IsRemoved");
 
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
                     b.Property<int?>("MetaId");
+
+                    b.Property<string>("Phone");
 
                     b.HasKey("Id");
 
@@ -181,8 +224,6 @@ namespace Data.Persistence.Migrations
 
                     b.Property<int>("RoomId");
 
-                    b.Property<int>("ScheduleId");
-
                     b.Property<int>("SemesterId");
 
                     b.HasKey("Id");
@@ -227,25 +268,33 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired();
+
                     b.Property<DateTimeOffset>("AdmissionDate");
-
-                    b.Property<int>("CreditsAttained");
-
-                    b.Property<int>("CreditsTaken");
 
                     b.Property<DateTimeOffset>("DateOfBirth");
 
                     b.Property<int>("DepartmentId");
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
                     b.Property<bool>("IsRemoved");
 
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
                     b.Property<int?>("MetaId");
+
+                    b.Property<string>("Phone");
 
                     b.Property<int>("ProgramId");
 
                     b.Property<int>("Roll");
-
-                    b.Property<int?>("SectionId");
 
                     b.HasKey("Id");
 
@@ -254,8 +303,6 @@ namespace Data.Persistence.Migrations
                     b.HasIndex("MetaId");
 
                     b.HasIndex("ProgramId");
-
-                    b.HasIndex("SectionId");
 
                     b.ToTable("Students");
                 });
@@ -434,12 +481,6 @@ namespace Data.Persistence.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("Phone");
-
                     b.Property<int>("Role");
 
                     b.HasDiscriminator().HasValue("AppUser");
@@ -459,6 +500,23 @@ namespace Data.Persistence.Migrations
                     b.HasOne("Domain.Program")
                         .WithMany("Courses")
                         .HasForeignKey("ProgramId");
+                });
+
+            modelBuilder.Entity("Domain.CourseEnrollment", b =>
+                {
+                    b.HasOne("Domain.Metadata", "Meta")
+                        .WithMany()
+                        .HasForeignKey("MetaId");
+
+                    b.HasOne("Domain.Section", "Section")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Student", "Student")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -592,10 +650,6 @@ namespace Data.Persistence.Migrations
                         .WithMany("Students")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Section")
-                        .WithMany("Students")
-                        .HasForeignKey("SectionId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

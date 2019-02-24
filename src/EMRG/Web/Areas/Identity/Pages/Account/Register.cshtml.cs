@@ -40,13 +40,6 @@ namespace Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
 
             [Required]
             [Display(Name = "Username")]
@@ -87,9 +80,6 @@ namespace Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new AppUser {
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Phone = Input.Phone,
                     Role = Input.Role,
                     UserName = Input.UserName,
                     Email = Input.Email };

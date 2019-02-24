@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
-    public class Faculty : Document
+    public class Faculty : Person
     {
         public string Initial { get; set; }
         public string Designation { get; set; }
@@ -12,6 +12,5 @@ namespace Domain
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
-        
     }
 }
