@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
-using Domain;
 
 namespace Web.Areas.Admin.Pages.Semesters
 {
     public class DetailsModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public DetailsModel(Data.Persistence.AppDbContext context)
+        public DetailsModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         public Semester Semester { get; set; }
@@ -28,7 +27,7 @@ namespace Web.Areas.Admin.Pages.Semesters
                 return NotFound();
             }
 
-            Semester = await _context.Semesters.FirstOrDefaultAsync(m => m.Id == id);
+            Semester = await _db.Semesters.GetById((int)id);
 
             if (Semester == null)
             {

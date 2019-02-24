@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Data.Persistence;
-using Domain;
 
 namespace Web.Areas.Admin.Pages.Semesters
 {
     public class DeleteModel : PageModel
     {
-        private readonly Data.Persistence.AppDbContext _context;
+        private readonly IUnitOfWork _db;
 
-        public DeleteModel(Data.Persistence.AppDbContext context)
+        public DeleteModel(IUnitOfWork db)
         {
-            _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -29,8 +28,7 @@ namespace Web.Areas.Admin.Pages.Semesters
                 return NotFound();
             }
 
-            Semester = await _context.Semesters.FirstOrDefaultAsync(m => m.Id == id);
-
+            Semester = await _db.Semesters.GetById((int)id);
             if (Semester == null)
             {
                 return NotFound();
@@ -45,12 +43,12 @@ namespace Web.Areas.Admin.Pages.Semesters
                 return NotFound();
             }
 
-            Semester = await _context.Semesters.FindAsync(id);
+            Semester = await _db.Semesters.GetById((int)id);
 
             if (Semester != null)
             {
-                _context.Semesters.Remove(Semester);
-                await _context.SaveChangesAsync();
+                Semester.Meta.Updated(User.Identity.Name);
+                await _db.Semesters.Remove((int)id);
             }
 
             return RedirectToPage("./Index");

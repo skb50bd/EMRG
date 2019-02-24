@@ -1,5 +1,6 @@
 ﻿@page
 @model Web.Areas.Admin.Pages.Semesters.EditModel
+@using static Domain.Season
 
 @{
     ViewData["Title"] = "Edit";
@@ -15,7 +16,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Semester.Season" class="control-label"></label>
-                <select asp-for="Semester.Season" class="form-control"></select>
+                <select asp-for="Semester.Season" class="form-control">
+                    <option value="" selected disabled>Select Season</option>
+                    <option value="@Spring">Spring</option>
+                    <option value="@Summer">Summer</option>
+                    <option value="@Fall">Fall</option>
+                </select>
                 <span asp-validation-for="Semester.Season" class="text-danger"></span>
             </div>
             <div class="form-group">
