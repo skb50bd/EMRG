@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Data.Persistence;
-using Domain;
-using Data.Core;
 
 namespace Web.Areas.Admin.Pages.Students
 {
@@ -45,6 +45,7 @@ namespace Web.Areas.Admin.Pages.Students
                 return Page();
             }
             Student.Meta = Metadata.Created(User.Identity.Name);
+            Student.AdmissionDate = DateTime.Now;
             _db.Students.Add(Student);
             await _db.CompleteAsync();
 
