@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
-using Data.Core;
-using Domain;
-using Microsoft.EntityFrameworkCore;
-using Brotal.Extensions;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+using Brotal.Extensions;
+
+using Data.Core;
+
+using Domain;
+
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Data.Persistence
 {
-    class StudentRepository : TrackingRepository<Student>, ITrackingRepository<Student>
+    internal class StudentRepository : TrackingRepository<Student>, ITrackingRepository<Student>
     {
         public StudentRepository(AppDbContext context)
             : base(context) { }
@@ -30,21 +33,30 @@ namespace Data.Persistence
                        .OrderByDescending(f => f.Meta.CreatedAt)
                        .Include(f => f.Department)
                        .Include(p => p.Program)
+                        .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(s => s.Course)
                        .ToListAsync();
 
         public override async Task<IEnumerable<Student>> GetAll()
             => await Context.Students
                         .Include(f => f.Department)
                         .Include(p => p.Program)
+                        .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(s => s.Course)
                         .AsNoTracking()
                         .Where(e => !e.IsRemoved)
                         .ToListAsync();
 
-        //public override async Task<Student> GetById(int id)
-        //    => await Context.Students
-        //                .Include(d => d.Department)
-        //                .Include(p => p.Program)
-        //                .FirstOrDefaultAsync(t => t.Id == id);
+        public override async Task<Student> GetById(int id)
+            => await Context.Students
+                        .Include(d => d.Department)
+                        .Include(p => p.Program)
+                        .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(s => s.Course)
+                        .FirstOrDefaultAsync(t => t.Id == id);
     }
 }
 
