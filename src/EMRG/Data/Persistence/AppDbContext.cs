@@ -40,9 +40,7 @@ namespace Data.Persistence
                         .Where(p => p.Name == nameof(Document.Meta));
 
             foreach (var p in metas)
-            {
                 p.IsEagerLoaded = true;
-            }
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
