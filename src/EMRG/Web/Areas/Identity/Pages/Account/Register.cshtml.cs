@@ -41,16 +41,16 @@ namespace Web.Areas.Identity.Pages.Account
         public class InputModel
         {
 
-            [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
+            //[Required]
+            //[Display(Name = "Username")]
+            //public string UserName { get; set; }
+
+            //[Required]
+            //[Phone]
+            //public string Phone { get; set; }
 
             [Required]
-            [Phone]
-            public string Phone { get; set; }
-
-            [Required]
-            public Role Role{ get; set; }
+            public Role Role { get; set; }
 
             [Required]
             [EmailAddress]
@@ -69,28 +69,27 @@ namespace Web.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public void OnGet(string returnUrl = null)
-        {
-            ReturnUrl = returnUrl;
-        }
+        public void OnGet(string returnUrl = null) => ReturnUrl = returnUrl;
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new AppUser {
+                AppUser user = new AppUser
+                {
                     Role = Input.Role,
-                    UserName = Input.UserName,
-                    Email = Input.Email };
+                    UserName = Input.Email,
+                    Email = Input.Email
+                };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
+                    string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    string callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { userId = user.Id, code = code },
@@ -102,7 +101,7 @@ namespace Web.Areas.Identity.Pages.Account
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
-                foreach (var error in result.Errors)
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }

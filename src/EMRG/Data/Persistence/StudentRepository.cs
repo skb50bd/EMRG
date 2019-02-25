@@ -28,9 +28,9 @@ namespace Data.Persistence
            => await Context.Students
                        .AsNoTracking()
                        .Where(predicate.And(i => !i.IsRemoved
-                           && i.Meta.CreatedAt >= from
-                           && i.Meta.CreatedAt <= to))
-                       .OrderByDescending(f => f.Meta.CreatedAt)
+                           && i.Meta.CreatedAt >= (from ?? DateTime.MinValue)
+                           && i.Meta.CreatedAt <= (to ?? DateTime.MaxValue)))
+                       .OrderByDescending(order)
                        .Include(f => f.Department)
                        .Include(p => p.Program)
                         .Include(s => s.Enrollments)
