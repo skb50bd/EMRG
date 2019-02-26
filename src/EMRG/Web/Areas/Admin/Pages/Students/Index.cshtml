@@ -1,4 +1,5 @@
 ﻿@page
+@using Brotal.Extensions
 @model Web.Areas.Admin.Pages.Students.IndexModel
 
 @{
@@ -14,8 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Roll)
-            </th>
+                @Html.DisplayNameFor(model => model.Student[0].StudentId)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Department)
             </th>
@@ -41,19 +41,18 @@
 @foreach (var item in Model.Student) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Roll)
-            </td>
+                @Html.DisplayFor(modelItem => item.StudentId)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.Name)
+                @Html.DisplayFor(modelItem => item.Department.Code)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Program.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AdmissionDate)
+                @item.AdmissionDate.LocalDate()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @item.DateOfBirth.LocalDate()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreditsTaken)

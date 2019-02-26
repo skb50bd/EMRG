@@ -4,13 +4,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using Brotal.Extensions;
+
 using Data.Core;
 
 using Domain;
 
 using Microsoft.EntityFrameworkCore;
-
-using Brotal.Extensions;
 
 
 
@@ -33,12 +33,12 @@ namespace Data.Persistence
             predicate = predicate.And(
                 e => e.Meta.CreatedAt >= (from ?? DateTime.MinValue)
                     && e.Meta.CreatedAt <= (to ?? DateTime.MaxValue));
-
+            
             return await Context.Set<T>()
                         .Where(predicate)
                         .OrderByDescending(order)
                         .AsNoTracking()
-                        .ToListAsync();
+                        .ToListAsync(); ;
         }
 
         public virtual async Task<IEnumerable<T>> GetAll()

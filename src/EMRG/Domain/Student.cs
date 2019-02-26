@@ -9,11 +9,7 @@ namespace Domain
     public class Student : Person
     {
         [Display(Name = "Student Id")]
-        public string StudentId => 
-            AdmissionDate.Year + "-" 
-            + (AdmissionDate.Month - 1) / 4 + 1 + "-" 
-            + Program.Code + "-" 
-            + Roll;
+        public string StudentId => this.GetStudentId();
 
         public int Roll { get; set; }
 
@@ -24,32 +20,27 @@ namespace Domain
         [Display(Name = "Program")]
         public int ProgramId { get; set; }
         public virtual Program Program { get; set; }
-        
+
         [Display(Name = "Admission Date")]
         [DataType(DataType.Date)]
-        public DateTimeOffset AdmissionDate { get; set; }
+        public DateTime AdmissionDate { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Date of Birth")]
-        public DateTimeOffset DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        public int Age => (int)DateTime.Today.Subtract(DateOfBirth.DateTime).TotalDays;
+        public int Age => DateOfBirth.CalculateAge();
 
         [Display(Name = "Credits Taken")]
-        public int CreditsTaken => 
-            Sections?.Select(s => s.Course)
-            .Distinct()
-            .Sum(c=> c.Credits) ?? 0;
+        public int CreditsTaken => this.CalculateCreditsTaken();
 
         [Display(Name = "Credits Earned")]
-        public int CreditsEarned =>
-            Enrollments?.Where(e => e.Grade > Grade.F)
-                .Select(e => e.Section)
-                .Select(s => s.Course)
-                .Distinct()
-                .Sum(c => c.Credits) ?? 0;
+        public int CreditsEarned => this.CalculateCreditsEarned();
 
         public List<CourseEnrollment> Enrollments { get; set; }
         public List<Section> Sections => Enrollments?.Select(e => e.Section).ToList();
+
+        public float TotalGradePoints => this.CalculateTotalGradePoints();
+        public float Cgpa => this.CalculateCgpa();
     }
 }

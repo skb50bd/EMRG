@@ -26,12 +26,13 @@ namespace Data.Persistence
                 .HasMany(f => f.Sections)
                 .WithOne(s => s.Faculty)
                 .OnDelete(DeleteBehavior.Restrict);
-            
-            builder.Entity<Student>()
-                .HasOne(s => s.Program)
-                .WithMany(p => p.Students)
-                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Student>(e => {
+                e.HasOne(s => s.Program)
+                    .WithMany(p => p.Students)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
             builder.Entity<Section>()
                 .OwnsOne(s => s.Schedule, 
                     sc => sc.OwnsMany(st => st.TimeSlots, ts => ts.HasKey(t => t.Id)));

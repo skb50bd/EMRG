@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain
@@ -12,5 +13,7 @@ namespace Domain
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
+
+        public DateTime JoinDate => Meta.CreatedAt.Date;
     }
 }
