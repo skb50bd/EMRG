@@ -32,7 +32,16 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
         </form>
+        @if(ViewBag.Message != null)
+        {
+            <script ="text/javascript">
+                window.onload = function () {
+                    alert("@ViewBag.Message")
+                }
+            </script>
+        }
     </div>
 </div>
 

@@ -14,6 +14,17 @@ namespace Domain
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public DateTime JoinDate => Meta.CreatedAt.Date;
+        //public DateTime JoinDate => Meta.CreatedAt.Date;
+        public DateTime JoinDate()
+        {
+            if(Meta.CreatedAt.Date != null)
+            {
+                return Meta.CreatedAt.Date;
+            }
+            else
+            {
+                return DateTime.Parse("06/01/1995");
+            }
+        }
     }
 }

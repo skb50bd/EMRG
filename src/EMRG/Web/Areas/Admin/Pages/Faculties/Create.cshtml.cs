@@ -34,10 +34,10 @@ namespace Web.Pages.Faculties
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
             Faculty.Meta = Metadata.Created(User.Identity.Name);
             _db.Faculties.Add(Faculty);
             await _db.CompleteAsync();

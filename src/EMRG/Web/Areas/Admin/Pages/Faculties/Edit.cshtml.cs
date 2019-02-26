@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Brotal.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Linq;
 
 namespace Web.Pages.Faculties
 {
@@ -50,7 +52,13 @@ namespace Web.Pages.Faculties
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+
+                var modelStateErrors = this.ModelState.Keys.SelectMany(key => this.ModelState[key].Errors);
+                foreach(ModelError Err in modelStateErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("SomeText");
+                }
+
             }
 
             var original = await _db.Faculties.GetById(Faculty.Id);
@@ -58,6 +66,8 @@ namespace Web.Pages.Faculties
             meta.Updated(User.Identity.Name);
             original.SetValuesFrom(Faculty);
             original.Meta = meta;
+
+
 
             try
             {
