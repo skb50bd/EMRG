@@ -41,6 +41,8 @@ namespace Domain
         public List<Section> Sections => Enrollments?.Select(e => e.Section).ToList();
 
         public float TotalGradePoints => this.CalculateTotalGradePoints();
+
+        [Display(Name = "CGPA")]
         public float Cgpa => this.CalculateCgpa();
     }
 }

@@ -5,16 +5,23 @@
     ViewData["Title"] = "Faculties";
 }
 
-<h1>Index</h1>
+<h1 class="mt-4">Faculties</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
+<p class="text-right">
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
+
 <table class="table table-hover table-borderless table-striped">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Faculties[0].FullName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Faculties[0].Initial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculties[0].Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Faculties[0].Designation)
@@ -30,7 +37,13 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Initial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Designation)
@@ -38,7 +51,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Department.Name)
                 </td>
-                <td>
+                <td class="text-right">
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
