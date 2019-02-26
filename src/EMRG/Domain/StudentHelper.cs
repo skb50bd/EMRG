@@ -25,13 +25,19 @@ namespace Domain
                     .Distinct()
                     .Sum(c => c.Credits) ?? 0;
 
-        public static IDictionary<Course, float> GetBestScores(this Student student)
+        public static IDictionary<Course, float> GetBestScores(
+            this Student student)
         {
-            var courses = student.Enrollments?.Select(e => e.Section.Course).Distinct();
+            var courses = student.Enrollments
+                ?.Select(e => e.Section.Course)
+                .Distinct();
             var res = new Dictionary<Course, float>();
             foreach (var c in courses)
             {
-                res[c] = student.Enrollments?.Where(e => e.Section.Course == c).Select(e => e.GradePoint).Max() ?? 0;
+                res[c] = student.Enrollments
+                    ?.Where(e => e.Section.Course == c)
+                    .Select(e => e.GradePoint)
+                    .Max() ?? 0;
             }
             return res;
         }
