@@ -13,7 +13,5 @@ namespace Domain
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
-
-        public DateTime JoinDate => Meta.CreatedAt.Date;
     }
 }

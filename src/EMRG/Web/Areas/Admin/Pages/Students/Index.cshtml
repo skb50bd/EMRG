@@ -6,27 +6,29 @@
     ViewData["Title"] = "Students";
 }
 
-<h1>Index</h1>
+<h1 class="mt-4">@ViewBag.Title</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
+<p class="text-right">
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].StudentId)</th>
+                @Html.DisplayNameFor(model => model.Student[0].StudentId)
+            </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Department)
+                @Html.DisplayNameFor(model => model.Student[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Program)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].AdmissionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].DateOfBirth)
+                @Html.DisplayNameFor(model => model.Student[0].Cgpa)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].CreditsTaken)
@@ -38,34 +40,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentId)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Program.Name)
-            </td>
-            <td>
-                @item.AdmissionDate.LocalDate()
-            </td>
-            <td>
-                @item.DateOfBirth.LocalDate()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditsTaken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditsEarned)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Student)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Program.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cgpa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditsTaken)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditsEarned)
+                </td>
+                <td class="text-right">
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

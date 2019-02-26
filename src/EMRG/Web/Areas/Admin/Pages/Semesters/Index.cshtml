@@ -2,16 +2,17 @@
 @model Web.Areas.Admin.Pages.Semesters.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Semesters";
 }
 
-<h1>Index</h1>
+<h1 class="mt-4">@ViewBag.Title</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
+<p class="text-right">
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Semester[0].Season)
@@ -31,7 +32,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Year)
             </td>
-            <td>
+            <td class="text-right">
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
