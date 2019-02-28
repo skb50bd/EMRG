@@ -41,5 +41,11 @@ namespace Data.Persistence
                         .AsNoTracking()
                         .Where(e => !e.IsRemoved)
                         .ToListAsync();
+
+        public override async Task<Faculty> GetById(int Id)
+            => await Context.Faculties
+                        .Include(d => d.Department)
+                        .Include(s => s.Sections)
+                        .FirstOrDefaultAsync(f => f.Id == Id);
     }
 }

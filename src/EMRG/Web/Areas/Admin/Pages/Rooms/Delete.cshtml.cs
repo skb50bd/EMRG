@@ -52,8 +52,9 @@ namespace Web.Areas.Admin.Pages.Rooms
             {
                 Room.Meta.Updated(User.Identity.Name);
                 await _db.Rooms.Remove((int)id);
+                await _db.CompleteAsync();
             }
-
+            
             return RedirectToPage("./Index");
         }
     }
