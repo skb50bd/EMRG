@@ -1,0 +1,66 @@
+﻿@page
+@model Web.Areas.FacultyZone.Pages.Schedule.IndexModel
+@{
+    ViewData["Title"] = "Schedule";
+}
+
+<h1 class="mt-4">@ViewBag.Title</h1>
+
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Course)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Semester)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Schedule.TimeSlots[0].DayOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty.Sections[0].Schedule.TimeSlots[0].StartTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Faculty.Sections != null)
+        {
+            @foreach (var item in Model.Faculty.Sections)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule.TimeSlots[0].DayOfWeek)<br />
+                        @Html.DisplayFor(modelItem => item.Schedule.TimeSlots[1].DayOfWeek)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule.TimeSlots[0].StartTime)<br />
+                        @Html.DisplayFor(modelItem => item.Schedule.TimeSlots[1].StartTime)
+                    </td>
+                
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+

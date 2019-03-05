@@ -10,6 +10,6 @@ namespace Data.Core
         Task Remove(int id);
         Task<IList<T>> GetRemovedItems();
         Task<bool> IsRemoved(int id);
-
+        Task<Faculty> GetByInitial(string initial);
     }
 }

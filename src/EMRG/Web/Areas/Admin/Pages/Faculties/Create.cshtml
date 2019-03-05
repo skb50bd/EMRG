@@ -13,20 +13,20 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <partial name="_PersonCreatePartial" for="Faculty" />
+            <partial name="_PersonCreatePartial" for="Input" />
             <div class="form-group">
-                <label asp-for="Faculty.Initial" class="control-label"></label>
-                <input asp-for="Faculty.Initial" class="form-control" />
-                <span asp-validation-for="Faculty.Initial" class="text-danger"></span>
+                <label asp-for="Input.Initial" class="control-label"></label>
+                <input asp-for="Input.Initial" class="form-control" />
+                <span asp-validation-for="Input.Initial" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Faculty.Designation" class="control-label"></label>
-                <input asp-for="Faculty.Designation" class="form-control" />
-                <span asp-validation-for="Faculty.Designation" class="text-danger"></span>
+                <label asp-for="Input.Designation" class="control-label"></label>
+                <input asp-for="Input.Designation" class="form-control" />
+                <span asp-validation-for="Input.Designation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Faculty.DepartmentId" class="control-label"></label>
-                <select asp-for="Faculty.DepartmentId"
+                <label asp-for="Input.DepartmentId" class="control-label"></label>
+                <select asp-for="Input.DepartmentId"
                         class="form-control"
                         asp-items="ViewBag.DepartmentId"></select>
             </div>

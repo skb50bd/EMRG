@@ -22,5 +22,6 @@ namespace Data.Core
         Task Delete(int id);
         Task<bool> Exists(int id);
         Task<int> Count(DateTime? from = null, DateTime? to = null);
+
     }
 }

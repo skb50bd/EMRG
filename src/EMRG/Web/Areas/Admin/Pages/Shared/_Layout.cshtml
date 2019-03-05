@@ -26,7 +26,7 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
 
-        
+
 
         <div id="page-content-wrapper">
 
@@ -38,12 +38,6 @@
         </div>
         <!-- /#page-content-wrapper -->
         <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
     </div>
 
     <environment include="Development">
@@ -70,3 +64,11 @@
 </body>
 </html>
 
+@section Scripts {
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+}
