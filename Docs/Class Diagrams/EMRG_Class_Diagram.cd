@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Domain.AppUser">
+    <Position X="21.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Course">
+    <Position X="10" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAgAAAAAAgAAQAEAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Course.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.CourseEnrollment">
+    <Position X="16.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAABAAAAAAAAAAAAAAAIESAAA=</HashCode>
+      <FileName>CourseEnrollment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Department">
+    <Position X="19" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASIAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Entity">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.TrackedEntity">
+    <Position X="12.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Document">
+    <Position X="14" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Faculty">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAEAAAAgAAAEAAAAAAAAA=</HashCode>
+      <FileName>Faculty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Metadata">
+    <Position X="28" Y="3" Width="1.5" />
+    <InheritanceLine Type="Domain.Entity" ManuallyRouted="true">
+      <Path>
+        <Point X="15.75" Y="1.603" />
+        <Point X="15.75" Y="2.341" />
+        <Point X="24.167" Y="2.341" Type="JumpStart" />
+        <Point X="24.333" Y="2.341" Type="JumpEnd" />
+        <Point X="26.417" Y="2.341" Type="JumpStart" />
+        <Point X="26.583" Y="2.341" Type="JumpEnd" />
+        <Point X="28.75" Y="2.341" />
+        <Point X="28.75" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AACAEEAAAAAACAAAACAAAAAAAAAAAEQAQAAAAAAAAAE=</HashCode>
+      <FileName>Metadata.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Person">
+    <Position X="5.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAIAAAAAAAAAAAAAAAAACAAAAIAAAAAg=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Program">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAABAAAAgAAAAAAgAAQAEAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Room">
+    <Position X="21.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Schedule">
+    <Position X="11.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Section">
+    <Position X="7.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIEAAASAAAAAIAAINAAAAAAAEAAAKAAAAAAAAAAAAA=</HashCode>
+      <FileName>Section.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Semester">
+    <Position X="14.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABQAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Semester.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Student">
+    <Position X="5.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAAAgAgAMAAEAAAAAAEAAQACAIAEAABAACAAA=</HashCode>
+      <FileName>Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.StudentHelper">
+    <Position X="25.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACABAAAAAAAAAAQAAAAIAQAAAAgAEAAAAAAAAAAAA=</HashCode>
+      <FileName>StudentHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.StudentId">
+    <Position X="23.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAABQAAAAAEICIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StudentId.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.TimeSlot">
+    <Position X="25.75" Y="3" Width="1.5" />
+    <InheritanceLine Type="Domain.Entity" ManuallyRouted="true">
+      <Path>
+        <Point X="15.75" Y="1.603" />
+        <Point X="15.75" Y="1.83" />
+        <Point X="26.5" Y="1.83" />
+        <Point X="26.5" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAgAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>TimeSlot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Domain.Grade">
+    <Position X="30" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAABAAAAAgQAAAACAIAAtCEIAQg=</HashCode>
+      <FileName>Grade.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.Role">
+    <Position X="30" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAgJAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Role.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.Season">
+    <Position X="28" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Semester.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
