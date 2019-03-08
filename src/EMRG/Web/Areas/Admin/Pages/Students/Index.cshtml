@@ -44,7 +44,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentId)
+                    @Html.DisplayTextFor(modelItem => item.StudentId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FullName)
@@ -65,9 +65,18 @@
                     @Html.DisplayFor(modelItem => item.CreditsEarned)
                 </td>
                 <td class="text-right">
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    @*<a asp-page="./Edit"
+                       asp-route-id="@item.Id">
+                        Edit
+                    </a> |*@
+                    <a asp-page="./Details"
+                       asp-route-id="@item.Id">
+                        Details
+                    </a> |
+                    <a asp-page="./Delete"
+                       asp-route-id="@item.Id">
+                        Delete
+                    </a>
                 </td>
             </tr>
         }

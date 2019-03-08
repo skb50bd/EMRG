@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
 using Brotal.Extensions;
 
 using Data.Core;
@@ -21,6 +23,7 @@ namespace Web.Areas.Admin.Pages.Students
 {
     public class CreateModel : PageModel
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _db;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
@@ -28,6 +31,7 @@ namespace Web.Areas.Admin.Pages.Students
         private readonly IEmailSender _emailSender;
 
         public CreateModel(
+            IMapper mapper,
             IUnitOfWork db,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -35,6 +39,7 @@ namespace Web.Areas.Admin.Pages.Students
             IEmailSender emailSender
             )
         {
+            _mapper = mapper;
             _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,11 +49,11 @@ namespace Web.Areas.Admin.Pages.Students
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["DepartmentId"] =
-                new SelectList(
-                    await _db.Departments.GetAll(),
-                    nameof(Department.Id),
-                    nameof(Department.Name));
+            //ViewData["DepartmentId"] =
+            //    new SelectList(
+            //        await _db.Departments.GetAll(),
+            //        nameof(Department.Id),
+            //        nameof(Department.Name));
             ViewData["ProgramId"] =
                 new SelectList(
                     await _db.Programs.GetAll(),
@@ -58,7 +63,7 @@ namespace Web.Areas.Admin.Pages.Students
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public StudentInputModel StudentInput { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -67,28 +72,24 @@ namespace Web.Areas.Admin.Pages.Students
                 return Page();
             }
 
-            var program = await _db.Programs.GetById(Input.ProgramId);
-            var students = await _db.Students.Get(
-                s => s.StudentId.StartsWith(
-                    StudentIdHelper.GetIdPrefix(DateTime.Today, program.Code)),
-                s => s.Roll);
-            var nextRoll = (students.FirstOrDefault()?.Roll ?? 0) + 1;
+            var program = await _db.Programs.GetById(StudentInput.ProgramId);
 
-            var student = new Student
+            var sId = new StudentId
             {
-                FirstName     = Input.FirstName,
-                LastName      = Input.LastName,
-                Phone         = Input.Phone,
-                Email         = Input.Email,
-                Address       = Input.Address,
-                DepartmentId  = Input.DepartmentId,
-                ProgramId     = Input.ProgramId,
-                Program       = program,
-                AdmissionDate = DateTime.Today,
-                DateOfBirth   = Input.DateOfBirth.ParseDate(),
-                Roll          = nextRoll,
-                Meta          = Metadata.Created(User.Identity.Name)
+                Year = DateTime.Today.Year,
+                Season = DateTime.Now.GetSeason(),
+                Program = program.Code
             };
+            var students = await _db.Students.Get(
+                s => s.StudentId.AreBatchMates(sId),
+                s => s.StudentId.Roll);
+            sId.Roll = (students.FirstOrDefault()?.StudentId.Roll ?? 0) + 1;
+
+            var student = _mapper.Map<Student>(StudentInput);
+            student.AdmissionDate = DateTime.Today;
+            student.StudentId = sId;
+            student.Meta = Metadata.Created(User.Identity.Name);
+
             _db.Students.Add(student);
             await _db.CompleteAsync();
 
@@ -96,7 +97,7 @@ namespace Web.Areas.Admin.Pages.Students
             var user = new AppUser
             {
                 Role = Role.Student,
-                UserName = student.StudentId,
+                UserName = student.StudentId.ToString(),
                 Email = student.Email
             };
             var password = Membership.GenerateRandomPassword(
@@ -139,21 +140,5 @@ namespace Web.Areas.Admin.Pages.Students
 
             return RedirectToPage("./Index");
         }
-
-        public class InputModel : Person
-        {
-            [Required]
-            [Display(Name = "Department")]
-            public int DepartmentId { get; set; }
-
-            [Required]
-            [Display(Name = "Program")]
-            public int ProgramId { get; set; }
-
-            [Required]
-            [Display(Name = "Date of Birth")]
-            public string DateOfBirth { get; set; }
-        }
     }
-
 }

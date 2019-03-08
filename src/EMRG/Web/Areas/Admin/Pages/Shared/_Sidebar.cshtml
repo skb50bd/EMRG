@@ -1,40 +1,53 @@
 ﻿<div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Admin Panel </div>
+    <div class="sidebar-heading">
+        <a asp-area="Admin" asp-page="/Index"
+           class="nav-item list-group-item-action">
+            <i class="fas fa-home"></i>
+            Admin Panel
+        </a>
+    </div>
     <div class="list-group list-group-flush">
         <a asp-area="Admin" asp-page="/Semesters/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-calendar-week"></i>
             Semesters
         </a>
         <a asp-area="Admin" asp-page="/Departments/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-building"></i>
             Departments
         </a>
         <a asp-area="Admin" asp-page="/Programs/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-paper-plane"></i>
             Programs
         </a>
         <a asp-area="Admin" asp-page="/Faculties/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-chalkboard-teacher"></i>
             Faculties
         </a>
         <a asp-area="Admin" asp-page="/Students/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-user-graduate"></i>
             Students
         </a>
 
         <a asp-area="Admin" asp-page="/Courses/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-book"></i>
             Courses
         </a>
         <a asp-area="Admin" asp-page="/Rooms/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-door-open"></i>
             Rooms
         </a>
         <a asp-area="Admin" asp-page="/Sections/Index"
            class="list-group-item list-group-item-action bg-light">
+            <i class="fas fa-users"></i>
             Sections
         </a>
-    
+
     </div>
-        
 </div>

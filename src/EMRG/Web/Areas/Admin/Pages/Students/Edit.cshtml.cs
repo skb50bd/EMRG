@@ -10,19 +10,26 @@ using Data.Persistence;
 using Domain;
 using Data.Core;
 using Brotal.Extensions;
+using AutoMapper;
 
 namespace Web.Areas.Admin.Pages.Students
 {
     public class EditModel : PageModel
     {
         private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
 
-        public EditModel(IUnitOfWork db)
+        public EditModel(
+            IUnitOfWork db, 
+            IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         [BindProperty]
+        public StudentInputModel Input { get; set; }
+
         public Student Student { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -38,17 +45,20 @@ namespace Web.Areas.Admin.Pages.Students
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] =
-                new SelectList(
-                    await _db.Departments.GetAll(),
-                    nameof(Department.Id),
-                    nameof(Department.Name));
+            //ViewData["DepartmentId"] =
+            //    new SelectList(
+            //        await _db.Departments.GetAll(),
+            //        nameof(Department.Id),
+            //        nameof(Department.Name));
 
             ViewData["ProgramId"] =
                 new SelectList(
                     await _db.Programs.GetAll(),
                     nameof(Domain.Program.Id),
                     nameof(Domain.Program.Name));
+
+            Input = _mapper.Map<StudentInputModel>(Student);
+
             return Page();
         }
 
@@ -58,10 +68,13 @@ namespace Web.Areas.Admin.Pages.Students
             {
                 return Page();
             }
-
-            var original = await _db.Students.GetById(Student.Id);
+            Student = _mapper.Map<Student>(Input);
+            var original = await _db.Students.GetById(Input.Id);
             var meta = original.Meta;
             meta.Updated(User.Identity.Name);
+            Student.AdmissionDate = original.AdmissionDate;
+            Student.StudentId = original.StudentId;
+
             original.SetValuesFrom(Student);
             original.Meta = meta;
 
