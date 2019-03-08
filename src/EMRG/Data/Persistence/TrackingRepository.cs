@@ -59,5 +59,15 @@ namespace Data.Persistence
         public virtual async Task<bool> IsRemoved(int id)
             => await Context.Set<T>()
             .AnyAsync(e => e.Id == id && e.IsRemoved);
+
+        public async Task<Faculty> GetByInitial(string initial)
+            => await Context.Faculties
+                        .Include(f => f.Sections)
+                            .ThenInclude(f => f.Course)
+                        .Include(s=> s.Sections)
+                            .ThenInclude(s => s.Room)
+                        .Include(e => e.Sections)
+                            .ThenInclude(e => e.Semester)
+                        .FirstOrDefaultAsync(f => f.Initial == initial);
     }
 }

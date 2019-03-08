@@ -13,6 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="_PersonCreatePartial" for="Faculty" />
             <div class="form-group">
                 <label asp-for="Faculty.Initial" class="control-label"></label>
                 <input asp-for="Faculty.Initial" class="form-control" />

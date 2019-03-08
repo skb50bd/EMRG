@@ -56,9 +56,9 @@ namespace Web.Pages.Faculties
                 var modelStateErrors = this.ModelState.Keys.SelectMany(key => this.ModelState[key].Errors);
                 foreach(ModelError Err in modelStateErrors)
                 {
-                    System.Diagnostics.Debug.WriteLine("SomeText");
+                    System.Diagnostics.Debug.WriteLine(Err.ErrorMessage);
                 }
-
+                return Page();
             }
 
             var original = await _db.Faculties.GetById(Faculty.Id);

@@ -1,5 +1,5 @@
 ﻿@page
-@model Web.Areas.Admin.Pages.IndexModel
+@model Web.Areas.FacultyZone.Pages.IndexModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -13,6 +13,8 @@
     <!--<partial name="_Sidebar" />-->
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
+    
+
 
     <!-- /#page-content-wrapper -->
     <!-- Menu Toggle Script -->
@@ -23,12 +25,3 @@
         });
     </script>
 </div>*@
-
-@section Scripts  {
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-}
