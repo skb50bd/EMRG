@@ -6,10 +6,12 @@ namespace Domain
 {
     public static class StudentHelper
     {
-        public static string GetStudentId(this Student student) 
-            => StudentIdHelper.GetIdPrefix(
-                    student.AdmissionDate, student.Program.Code)
-                    + student.Roll.ToString().PadLeft(3, '0');
+        public static Season GetSeason(this DateTime dt)
+        {
+            if (dt.Month < 5) return Season.Spring;
+            if (dt.Month < 9) return Season.Summer;
+            else return Season.Fall;
+        }
 
         public static int CalculateAge(this DateTime dob) 
             => (int)(DateTime.Today.Subtract(dob).TotalDays / 365);
@@ -30,7 +32,7 @@ namespace Domain
         {
             var courses = student.Enrollments
                 ?.Select(e => e.Section.Course)
-                .Distinct();
+                .Distinct() ?? new List<Course>();
             var res = new Dictionary<Course, float>();
             foreach (var c in courses)
             {

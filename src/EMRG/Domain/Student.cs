@@ -9,9 +9,7 @@ namespace Domain
     public class Student : Person
     {
         [Display(Name = "Student Id")]
-        public string StudentId => this.GetStudentId();
-
-        public int Roll { get; set; }
+        public StudentId StudentId { get; set; }
 
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
