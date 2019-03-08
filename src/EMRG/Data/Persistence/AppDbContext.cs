@@ -1,9 +1,13 @@
 ﻿using System.Linq;
+using System.IO;
+using static System.Text.Encoding;
 
 using Domain;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Diagnostics;
 
 namespace Data.Persistence
 {
@@ -11,7 +15,19 @@ namespace Data.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
-        { }
+        {
+            try
+            {
+                var path = @"D:\EMRG\EMRG_Entities.dgml";
+                if (!File.Exists(path))
+                    File.WriteAllText(path, this.AsDgml(), UTF8);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error Creating DGML File for the context.\n" 
+                    + e.Message);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,15 +43,18 @@ namespace Data.Persistence
                 .WithOne(s => s.Faculty)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Student>(e => {
+            builder.Entity<Student>(e =>
+            {
+                e.OwnsOne(s => s.StudentId);
                 e.HasOne(s => s.Program)
                     .WithMany(p => p.Students)
                     .OnDelete(DeleteBehavior.Restrict);
-
             });
             builder.Entity<Section>()
-                .OwnsOne(s => s.Schedule, 
-                    sc => sc.OwnsMany(st => st.TimeSlots, ts => ts.HasKey(t => t.Id)));
+                .OwnsOne(s => s.Schedule,
+                    sc => sc.OwnsMany(
+                        st => st.TimeSlots,
+                        ts => ts.HasKey(t => t.Id)));
 
             builder.Entity<CourseEnrollment>()
                 .HasOne(c => c.Student)
