@@ -102,7 +102,7 @@ Here are the tools and libraries we will use to develop the project:
 
 4. Project Management & Source Control
 
-   **Azure DevOps** (with Git), formally known as _Visual Studio Team Services._ Project Page: [Link](https://dev.azure.com/skb50bd/CSE411)
+   **Azure DevOps** (with Git), formally known as _Visual Studio Team Services._ Project Page: [Link](https://dev.azure.com/brotal/CSE411_EMRG)
 
 5. Database & ORM
 
