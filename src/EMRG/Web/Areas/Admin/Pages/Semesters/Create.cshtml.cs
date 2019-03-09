@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 using Data.Core;
 
@@ -35,7 +37,17 @@ namespace Web.Areas.Admin.Pages.Semesters
             }
             Semester.Meta = Metadata.Created(User.Identity.Name);
             _db.Semesters.Add(Semester);
-            await _db.CompleteAsync();
+
+            try
+            {
+                await _db.CompleteAsync();
+            }
+            catch (Exception e)
+            {
+                var msg = "Error occured adding semester. Are you adding a duplicate semester?"; 
+                Debug.WriteLine(msg + e.Message);
+                return BadRequest(msg);
+            }
 
             return RedirectToPage("./Index");
         }

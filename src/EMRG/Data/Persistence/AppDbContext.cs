@@ -33,6 +33,9 @@ namespace Data.Persistence
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Semester>()
+                .HasAlternateKey(s => new { s.Season, s.Year });
+
             builder.Entity<Room>()
                 .HasMany(r => r.Sections)
                 .WithOne(s => s.Room)
