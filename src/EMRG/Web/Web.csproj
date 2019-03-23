@@ -61,6 +61,39 @@
 
 
   <ItemGroup>
+    <None Include="wwwroot\fonts\.DS_Store" />
+    <None Include="wwwroot\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\fonts\themify.svg" />
+    <None Include="wwwroot\img\.DS_Store" />
+    <None Include="wwwroot\img\banner\.DS_Store" />
+    <None Include="wwwroot\img\courses\.DS_Store" />
+    <None Include="wwwroot\img\elements\_DS_Store" />
+    <None Include="wwwroot\img\event\.DS_Store" />
+    <None Include="wwwroot\img\features\.DS_Store" />
+    <None Include="wwwroot\img\testimonials\.DS_Store" />
+    <None Include="wwwroot\img\trainer\.DS_Store" />
+    <None Include="wwwroot\scss\style.scss" />
+    <None Include="wwwroot\scss\_banner.scss" />
+    <None Include="wwwroot\scss\_blog.scss" />
+    <None Include="wwwroot\scss\_button.scss" />
+    <None Include="wwwroot\scss\_contact.scss" />
+    <None Include="wwwroot\scss\_elements.scss" />
+    <None Include="wwwroot\scss\_footer.scss" />
+    <None Include="wwwroot\scss\_header.scss" />
+    <None Include="wwwroot\scss\_home.scss" />
+    <None Include="wwwroot\scss\_mixins.scss" />
+    <None Include="wwwroot\scss\_predefine.scss" />
+    <None Include="wwwroot\scss\_reset.scss" />
+    <None Include="wwwroot\scss\_responsive.scss" />
+    <None Include="wwwroot\scss\_variables.scss" />
+    <None Include="wwwroot\vendors\.DS_Store" />
+    <None Include="wwwroot\vendors\bootstrap-datepicker\bootstrap-datetimepicker.min.js" />
+    <None Include="wwwroot\vendors\bootstrap-datepicker\bootstrap-select.js" />
+    <None Include="wwwroot\vendors\flipclock\timer.js" />
+    <None Include="wwwroot\vendors\jquery-ui\jquery-ui.js" />
+    <None Include="wwwroot\vendors\nice-select\js\jquery.nice-select.js" />
+    <None Include="wwwroot\vendors\nice-select\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\vendors\owl-carousel\owl.carousel.min.js" />
     <None Include="wwwroot\webfonts\fa-brands-400.svg" />
     <None Include="wwwroot\webfonts\fa-brands-400.woff2" />
     <None Include="wwwroot\webfonts\fa-regular-400.svg" />
@@ -71,6 +104,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Areas\DepartmentAdmin\Pages\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 
