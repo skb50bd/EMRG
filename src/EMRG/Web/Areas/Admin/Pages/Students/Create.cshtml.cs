@@ -25,7 +25,6 @@ namespace Web.Areas.Admin.Pages.Students
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _db;
-        private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<CreateModel> _logger;
         private readonly IEmailSender _emailSender;
@@ -34,7 +33,6 @@ namespace Web.Areas.Admin.Pages.Students
             IMapper mapper,
             IUnitOfWork db,
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
             ILogger<CreateModel> logger,
             IEmailSender emailSender
             )
@@ -42,7 +40,6 @@ namespace Web.Areas.Admin.Pages.Students
             _mapper = mapper;
             _db = db;
             _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -88,6 +85,7 @@ namespace Web.Areas.Admin.Pages.Students
             var student = _mapper.Map<Student>(StudentInput);
             student.AdmissionDate = DateTime.Today;
             student.StudentId = sId;
+            student.DepartmentId = program.DepartmentId;
             student.Meta = Metadata.Created(User.Identity.Name);
 
             _db.Students.Add(student);
@@ -100,17 +98,19 @@ namespace Web.Areas.Admin.Pages.Students
                 UserName = student.StudentId.ToString(),
                 Email = student.Email
             };
-            var password = Membership.GenerateRandomPassword(
-                new Brotal.Extensions.PasswordOptions
-                {
-                    RequiredLength = 8,
-                    RequireDigit = true,
-                    RequireLowercase = true,
-                    RequireUppercase = true,
-                    RequiredUniqueChars = 0,
-                    RequireNonAlphanumeric = true
-                }
-            );
+            //var password = Membership.GenerateRandomPassword(
+            //    new Brotal.Extensions.PasswordOptions
+            //    {
+            //        RequiredLength = 8,
+            //        RequireDigit = true,
+            //        RequireLowercase = true,
+            //        RequireUppercase = true,
+            //        RequiredUniqueChars = 0,
+            //        RequireNonAlphanumeric = true
+            //    }
+            //);
+            var password = "12345678";
+
             var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {

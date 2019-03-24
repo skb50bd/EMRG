@@ -12,7 +12,8 @@ namespace Domain
 
         [Display(Name = "Minimum Credits Required")]
         public string RequiredCredits { get; set; }
-        public List<Course> Courses { get; set; }
+        public List<Course> CompulsoryCourses { get; set; }
+        public List<Course> OptionalCourses { get; set; }
         public List<Student> Students { get; set; }
     }
 }
