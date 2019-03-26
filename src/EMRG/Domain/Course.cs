@@ -22,5 +22,7 @@ namespace Domain
         public List<Course> Prerequisites { get; set; }
 
         public virtual List<Section> Sections { get; set; }
+
+        public List<ProgramCourse> ProgramCourses { get; set; }
     }
 }

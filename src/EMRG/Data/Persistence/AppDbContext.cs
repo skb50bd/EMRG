@@ -64,6 +64,19 @@ namespace Data.Persistence
                 .WithMany(s => s.Enrollments)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ProgramCourse>()
+            .HasKey(pc => new { pc.ProgramId, pc.CourseId });
+
+            builder.Entity<ProgramCourse>()
+                .HasOne(pc => pc.program)
+                .WithMany(p => p.ProgramCourses)
+                .HasForeignKey(pc => pc.ProgramId);
+
+            builder.Entity<ProgramCourse>()
+                .HasOne(pc => pc.course)
+                .WithMany(c => c.ProgramCourses)
+                .HasForeignKey(pc => pc.CourseId);
+
             var metas =
                 builder.Model.GetEntityTypes().SelectMany(
                     d => d.GetNavigations())
@@ -82,5 +95,6 @@ namespace Data.Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<ProgramCourse> ProgramCourses{ get; set; }
     }
 }

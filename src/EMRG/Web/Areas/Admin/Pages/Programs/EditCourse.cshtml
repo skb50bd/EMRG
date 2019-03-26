@@ -1,0 +1,142 @@
+﻿@page
+@model Web.Areas.Admin.Pages.Programs.EditCourseModel
+@{
+    ViewData["Title"] = "Add/Remove Course";
+}
+
+<h3>@ViewData["Title"]</h3>
+<br />
+<br /><br />
+      <form method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+          <select asp-for="ProgramCourse.CourseId" class="selectpicker form-control"
+                  data-width="100%" asp-items="ViewBag.CoursesId" id="mySelect"
+                  data-live-search="true" onclick="reload()"></select>
+
+          <input type="submit" value="Save to Compolsory" class="btn btn-primary" name="saveButton"
+                 asp-page-handler="ComplosoryCourse" />
+
+          <input type="submit" value="Save to Optional" class="btn btn-primary" name="saveButton2"
+                 asp-page-handler="OptionalCourse" onclick="reload()" />
+          <input type="hidden" asp-for="Program.Id" />
+          <input type="hidden" asp-for="Program.DepartmentId" />
+          <input type="hidden" asp-for="Program.RequiredCredits" />
+          <input type="hidden" asp-for="Program.Code" />
+          <br />    
+          <br />
+      </form>
+          <div class="row form-group">
+              <div class="col">
+                  <h4>Compolsory Courses:</h4>
+
+                  <table class="table table-striped table-hover" id="compolsoryTable">
+                      <thead class="thead-dark">
+                          <tr>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Code)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Name)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Credits)
+                              </th>
+                              <th></th>
+                          </tr>
+                      </thead>
+
+                      <tbody>
+                          @foreach (var course in Model.AddedCompolsoryCourses)
+                          {
+                          <tr>
+                              <td>@course.course.Code</td>
+                              <td>@course.course.Name</td>
+                              <td>@course.course.Credits</td>
+                              <td>
+                                  <form method="post">
+                                      <input type="hidden" asp-for="DeleteId" value="@course.Id" />
+                                      <input type="hidden" asp-for="Program.Id" />
+
+
+                                      <input type="submit" value="Remove"
+                                             class="btn btn-primary btn-danger"
+                                             asp-page-handler="DeleteCourse" />
+                                  </form>
+                              </td>
+                          </tr>
+                          }
+                      </tbody>
+                  </table>
+              </div>
+              <div class="col">
+                  <h4>Optional Courses:</h4>
+
+                  <table class="table table-striped table-hover">
+                      <thead class="thead-dark">
+                          <tr>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Code)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Name)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Courses[0].Credits)
+                              </th>
+                              <th></th>
+                          </tr>
+                      </thead>
+
+                      <tbody>
+                          @foreach (var course in Model.AddedOptionalCourses)
+                          {
+                              <tr>
+                                  <td>@course.course.Code</td>
+                                  <td>@course.course.Name</td>
+                                  <td>@course.course.Credits</td>
+                                  <td>
+                                      <form method="post">
+                                          <input type="hidden" asp-for="DeleteId" value="@course.Id" />
+                                          <input type="hidden" asp-for="Program.Id" />
+
+
+                                          <input type="submit" value="Remove"
+                                                 class="btn btn-primary btn-danger"
+                                                 asp-page-handler="DeleteCourse" />
+                                      </form>
+                                  </td>
+                              </tr>
+                          }
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
+    
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+     var courses = JSON.parse('@Html.Raw(Json.Serialize(Model.Courses))');
+
+
+    function remove(object1 , object2) {
+        for (i = 0; i < x.length ; i++) {
+
+        }
+    }
+
+    function reload() {
+        window.location.reload();
+    }
+
+</script>
