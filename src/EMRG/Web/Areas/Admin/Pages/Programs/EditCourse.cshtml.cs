@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Brotal.Extensions;
+
+using Data.Core;
+
+using Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Domain;
-using Data.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Brotal.Extensions;
 
 namespace Web.Areas.Admin.Pages.Programs
 {
@@ -28,14 +32,6 @@ namespace Web.Areas.Admin.Pages.Programs
         public IList<Course> Courses { get; set; }
 
         [BindProperty]
-        public IList<ProgramCourse> AddedCompolsoryCourses { get; set; }
-        [BindProperty]
-        public IList<ProgramCourse> AddedOptionalCourses { get; set; }
-
-        [BindProperty]
-        public ProgramCourse ProgramCourse { get; set; }
-
-        [BindProperty]
         public int DeleteId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -47,14 +43,6 @@ namespace Web.Areas.Admin.Pages.Programs
             Program = await _db.Programs.GetById((int)id);
 
             Courses = (await _db.Courses.GetAll()).ToList();
-
-
-            AddedCompolsoryCourses = (await _db.ProgramCourses.GetAll())
-                .Where(s => s.program.Id == Program.Id && s.type=="Compolsory").ToList();
-
-            AddedOptionalCourses = (await _db.ProgramCourses.GetAll())
-                .Where(s => s.program.Id == Program.Id && s.type == "Optional").ToList();
-
             ViewData["CoursesId"] =
                 new SelectList(
                     Courses,
@@ -110,22 +98,6 @@ namespace Web.Areas.Admin.Pages.Programs
             }
 
 
-            ProgramCourse.program = Program;
-            ProgramCourse.course = await _db.Courses.GetById(ProgramCourse.CourseId);
-            ProgramCourse.type = "Compolsory";
-
-            ProgramCourse.Meta = Metadata.Created(User.Identity.Name);
-            //_db.ProgramCourses.Add(ProgramCourse);
-
-            if (Program.ProgramCourses == null)
-            {
-                Program.ProgramCourses = new List<ProgramCourse>();
-
-            }
-
-            Program.ProgramCourses.Add(ProgramCourse);
-
-
             var original = await _db.Programs.GetById(Program.Id);
             //var meta = original.Meta;
             //meta.Updated("sss");
@@ -159,23 +131,6 @@ namespace Web.Areas.Admin.Pages.Programs
                 return Page();
             }
 
-
-            ProgramCourse.program = Program;
-            ProgramCourse.course = await _db.Courses.GetById(ProgramCourse.CourseId);
-            ProgramCourse.type = "Optional";
-
-            ProgramCourse.Meta = Metadata.Created(User.Identity.Name);
-            //_db.ProgramCourses.Add(ProgramCourse);
-
-            if (Program.ProgramCourses == null)
-            {
-                Program.ProgramCourses = new List<ProgramCourse>();
-
-            }
-
-            Program.ProgramCourses.Add(ProgramCourse);
-
-
             var original = await _db.Programs.GetById(Program.Id);
             //var meta = original.Meta;
             //meta.Updated("sss");
@@ -203,30 +158,11 @@ namespace Web.Areas.Admin.Pages.Programs
         }
 
 
-        public async Task<IActionResult> OnPostDeleteCourseAsync()
-        {
-            ProgramCourse D = new ProgramCourse();
-            D = await _db.ProgramCourses.GetById((int)DeleteId);
+        //public async Task<IActionResult> OnPostDeleteCourseAsync()
+        //{
 
-            if (D != null)
-            {
-                D.Meta.Updated(User.Identity.Name);
-                await _db.ProgramCourses.Delete((int)D.Id);
-
-                try
-                {
-                    await _db.CompleteAsync();
-                }
-                catch (Exception)
-                {
-
-                    throw;
-
-                }
-            }
-
-            return RedirectToPage("./EditCourse", new { id = Program.Id });
-        }
+        //    return RedirectToPage("./EditCourse", new { id = Program.Id });
+        //}
 
         private async Task<bool> ProgramExistsAsync(int id)
         {

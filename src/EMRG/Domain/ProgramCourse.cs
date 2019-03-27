@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
-    public class ProgramCourse : Document
+    public class ProgramCourse : Entity
     {
         public int ProgramId { get; set; }
-        public Domain.Program program { get; set; }
+        public Program Program { get; set; }
 
         public int CourseId { get; set; }
-        public Course course { get; set; }
+        public Course Course { get; set; }
 
-        public string type { get; set; }
+        public bool IsOptional { get; set; }
     }
 }

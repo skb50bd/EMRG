@@ -15,8 +15,6 @@ namespace Data.Core
         ITrackingRepository<Semester> Semesters { get; }
         ITrackingRepository<Section> Sections { get; }
 
-        IRepository<ProgramCourse> ProgramCourses { get; }
-
         void Complete();
 
         Task CompleteAsync();

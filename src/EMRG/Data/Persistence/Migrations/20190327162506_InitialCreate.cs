@@ -228,8 +228,39 @@ namespace Data.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Semesters", x => x.Id);
+                    table.UniqueConstraint("AK_Semesters_Season_Year", x => new { x.Season, x.Year });
                     table.ForeignKey(
                         name: "FK_Semesters_Metadata_MetaId",
+                        column: x => x.MetaId,
+                        principalTable: "Metadata",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsRemoved = table.Column<bool>(nullable: false),
+                    MetaId = table.Column<int>(nullable: true),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Credits = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Courses_Metadata_MetaId",
                         column: x => x.MetaId,
                         principalTable: "Metadata",
                         principalColumn: "Id",
@@ -301,85 +332,29 @@ namespace Data.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "CoursePrerequisite",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsRemoved = table.Column<bool>(nullable: false),
-                    MetaId = table.Column<int>(nullable: true),
-                    DepartmentId = table.Column<int>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Credits = table.Column<int>(nullable: false),
-                    ProgramId = table.Column<int>(nullable: true)
+                    CourseId = table.Column<int>(nullable: false),
+                    PrerequisiteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.PrimaryKey("PK_CoursePrerequisite", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
+                        name: "FK_CoursePrerequisite_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CoursePrerequisite_Courses_PrerequisiteId",
+                        column: x => x.PrerequisiteId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Metadata_MetaId",
-                        column: x => x.MetaId,
-                        principalTable: "Metadata",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Courses_Programs_ProgramId",
-                        column: x => x.ProgramId,
-                        principalTable: "Programs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsRemoved = table.Column<bool>(nullable: false),
-                    MetaId = table.Column<int>(nullable: true),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    Phone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: false),
-                    StudentId_Year = table.Column<int>(nullable: false),
-                    StudentId_Season = table.Column<int>(nullable: false),
-                    StudentId_Program = table.Column<int>(nullable: false),
-                    StudentId_Roll = table.Column<int>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: false),
-                    ProgramId = table.Column<int>(nullable: false),
-                    AdmissionDate = table.Column<DateTime>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Students_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Students_Metadata_MetaId",
-                        column: x => x.MetaId,
-                        principalTable: "Metadata",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Students_Programs_ProgramId",
-                        column: x => x.ProgramId,
-                        principalTable: "Programs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,6 +408,100 @@ namespace Data.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProgramCourse",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProgramId = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
+                    IsOptional = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramCourse", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProgramCourse_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProgramCourse_Programs_ProgramId",
+                        column: x => x.ProgramId,
+                        principalTable: "Programs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsRemoved = table.Column<bool>(nullable: false),
+                    MetaId = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Phone = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    StudentId_Year = table.Column<int>(nullable: false),
+                    StudentId_Season = table.Column<int>(nullable: false),
+                    StudentId_Program = table.Column<int>(nullable: false),
+                    StudentId_Roll = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    ProgramId = table.Column<int>(nullable: false),
+                    AdmissionDate = table.Column<DateTime>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Metadata_MetaId",
+                        column: x => x.MetaId,
+                        principalTable: "Metadata",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Students_Programs_ProgramId",
+                        column: x => x.ProgramId,
+                        principalTable: "Programs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TimeSlot",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DayOfWeek = table.Column<int>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    ScheduleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TimeSlot", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TimeSlot_Sections_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Sections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CourseEnrollment",
                 columns: table => new
                 {
@@ -466,28 +535,6 @@ namespace Data.Persistence.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TimeSlot",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DayOfWeek = table.Column<int>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    ScheduleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TimeSlot", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TimeSlot_Sections_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Sections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -545,6 +592,16 @@ namespace Data.Persistence.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CoursePrerequisite_CourseId",
+                table: "CoursePrerequisite",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoursePrerequisite_PrerequisiteId",
+                table: "CoursePrerequisite",
+                column: "PrerequisiteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Courses_DepartmentId",
                 table: "Courses",
                 column: "DepartmentId");
@@ -553,11 +610,6 @@ namespace Data.Persistence.Migrations
                 name: "IX_Courses_MetaId",
                 table: "Courses",
                 column: "MetaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_ProgramId",
-                table: "Courses",
-                column: "ProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_MetaId",
@@ -573,6 +625,16 @@ namespace Data.Persistence.Migrations
                 name: "IX_Faculties_MetaId",
                 table: "Faculties",
                 column: "MetaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgramCourse_CourseId",
+                table: "ProgramCourse",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgramCourse_ProgramId",
+                table: "ProgramCourse",
+                column: "ProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Programs_DepartmentId",
@@ -661,6 +723,12 @@ namespace Data.Persistence.Migrations
                 name: "CourseEnrollment");
 
             migrationBuilder.DropTable(
+                name: "CoursePrerequisite");
+
+            migrationBuilder.DropTable(
+                name: "ProgramCourse");
+
+            migrationBuilder.DropTable(
                 name: "TimeSlot");
 
             migrationBuilder.DropTable(
@@ -676,6 +744,9 @@ namespace Data.Persistence.Migrations
                 name: "Sections");
 
             migrationBuilder.DropTable(
+                name: "Programs");
+
+            migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
@@ -686,9 +757,6 @@ namespace Data.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Semesters");
-
-            migrationBuilder.DropTable(
-                name: "Programs");
 
             migrationBuilder.DropTable(
                 name: "Departments");

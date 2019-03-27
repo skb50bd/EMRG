@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
-using static System.Text.Encoding;
+using System.Linq;
 
 using Domain;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Diagnostics;
+
+using static System.Text.Encoding;
 
 namespace Data.Persistence
 {
@@ -24,7 +25,7 @@ namespace Data.Persistence
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error Creating DGML File for the context.\n" 
+                Debug.WriteLine("Error Creating DGML File for the context.\n"
                     + e.Message);
             }
         }
@@ -64,25 +65,31 @@ namespace Data.Persistence
                 .WithMany(s => s.Enrollments)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ProgramCourse>()
-            .HasKey(pc => new { pc.ProgramId, pc.CourseId });
 
-            builder.Entity<ProgramCourse>()
-                .HasOne(pc => pc.program)
-                .WithMany(p => p.ProgramCourses)
-                .HasForeignKey(pc => pc.ProgramId);
+            builder.Entity<Course>(entity =>
+            {
+                entity.HasMany(c => c.Prerequisites)
+                      .WithOne(cp => cp.Course)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            builder.Entity<ProgramCourse>()
-                .HasOne(pc => pc.course)
-                .WithMany(c => c.ProgramCourses)
-                .HasForeignKey(pc => pc.CourseId);
+            builder.Entity<Program>(entity =>
+            {
+                entity.HasMany(p => p.Courses)
+                      .WithOne(pc => pc.Program)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            var metas =
+            var ep =
                 builder.Model.GetEntityTypes().SelectMany(
                     d => d.GetNavigations())
-                        .Where(p => p.Name == nameof(Document.Meta));
+                        .Where(
+                            p => p.Name == nameof(Document.Meta)
+                                 || p.Name == nameof(Program.Courses)
+                                 || p.Name == nameof(Course.Prerequisites)
+                        );
 
-            foreach (var p in metas)
+            foreach (var p in ep)
                 p.IsEagerLoaded = true;
         }
 
@@ -95,6 +102,5 @@ namespace Data.Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Section> Sections { get; set; }
-        public DbSet<ProgramCourse> ProgramCourses{ get; set; }
     }
 }

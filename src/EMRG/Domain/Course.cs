@@ -19,10 +19,8 @@ namespace Domain
         [Display(Name = "Credits")]
         public int Credits { get; set; }
 
-        public List<Course> Prerequisites { get; set; }
+        public List<CoursePrerequisite> Prerequisites { get; set; }
 
         public virtual List<Section> Sections { get; set; }
-
-        public List<ProgramCourse> ProgramCourses { get; set; }
     }
 }
