@@ -19,6 +19,13 @@ namespace Data.Persistence
         public CourseRepository(AppDbContext context)
            : base(context) { }
 
+
+        public override async Task<Course> GetById(int id)
+            => await Context.Set<Course>()
+                        .Include(p => p.Prerequisites)
+                            .ThenInclude(pc => pc.Course)
+                        .FirstOrDefaultAsync(t => t.Id == id);
+
         public override async Task<IEnumerable<Course>> Get<T2>(
             Expression<Func<Course, bool>> predicate,
             Expression<Func<Course, T2>> order,
@@ -32,6 +39,8 @@ namespace Data.Persistence
                         .OrderByDescending(f => f.Meta.CreatedAt)
                         .Include(f => f.Department)
                         .Include(f => f.Sections)
+                        .Include(c => c.Prerequisites)
+                                .ThenInclude(p => p.Course)
                         .ToListAsync();
 
         public override async Task<IEnumerable<Course>> GetAll()

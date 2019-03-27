@@ -11,15 +11,16 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-    @*<select asp-for="ProgramCourse.CourseId" class="selectpicker form-control"
+    <select asp-for="AddedCourses.CourseId" class="selectpicker form-control"
         data-width="100%" asp-items="ViewBag.CoursesId" id="mySelect"
-        data-live-search="true" onclick="reload()"></select>*@
+        data-live-search="true" ></select>
 
     <input type="submit" value="Save to Compolsory" class="btn btn-primary" name="saveButton"
            asp-page-handler="ComplosoryCourse" />
 
     <input type="submit" value="Save to Optional" class="btn btn-primary" name="saveButton2"
            asp-page-handler="OptionalCourse" onclick="reload()" />
+
     <input type="hidden" asp-for="Program.Id" />
     <input type="hidden" asp-for="Program.DepartmentId" />
     <input type="hidden" asp-for="Program.RequiredCredits" />
@@ -48,12 +49,12 @@
             </thead>
 
             <tbody>
-                @*@foreach (var course in Model.AddedCompolsoryCourses)
+                @foreach (var course in Model.AddedCompolsoryCourses)
                     {
                     <tr>
-                        <td>@course.course.Code</td>
-                        <td>@course.course.Name</td>
-                        <td>@course.course.Credits</td>
+                        <td>@course.Course.Id</td>
+                        <td>@course.Course.Name</td>
+                        <td>@course.Course.Credits</td>
                         <td>
                             <form method="post">
                                 <input type="hidden" asp-for="DeleteId" value="@course.Id" />
@@ -66,7 +67,7 @@
                             </form>
                         </td>
                     </tr>
-                    }*@
+                    }
             </tbody>
         </table>
     </div>
@@ -90,12 +91,12 @@
             </thead>
 
             <tbody>
-                @*@foreach (var course in Model.AddedOptionalCourses)
+                @foreach (var course in Model.AddedOptionalCourses)
                     {
                         <tr>
-                            <td>@course.course.Code</td>
-                            <td>@course.course.Name</td>
-                            <td>@course.course.Credits</td>
+                            <td>@course.Course.Code</td>
+                            <td>@course.Course.Name</td>
+                            <td>@course.Course.Credits</td>
                             <td>
                                 <form method="post">
                                     <input type="hidden" asp-for="DeleteId" value="@course.Id" />
@@ -108,7 +109,7 @@
                                 </form>
                             </td>
                         </tr>
-                    }*@
+                    }
             </tbody>
         </table>
     </div>

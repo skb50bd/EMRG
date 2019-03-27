@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Compile Remove="Persistence\Migrations\20190224161123_AddedEnrollments.cs" />
+    <Compile Remove="Persistence\Migrations\20190327192943_Prerequisites.cs" />
+    <Compile Remove="Persistence\Migrations\20190327192943_Prerequisites.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

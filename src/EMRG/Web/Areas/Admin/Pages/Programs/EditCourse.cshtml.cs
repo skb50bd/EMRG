@@ -32,6 +32,18 @@ namespace Web.Areas.Admin.Pages.Programs
         public IList<Course> Courses { get; set; }
 
         [BindProperty]
+        public IList<ProgramCourse> ProgramCourses { get; set; }
+
+        [BindProperty]
+        public ProgramCourse AddedCourses { get; set; }
+
+        [BindProperty]
+        public IList<ProgramCourse> AddedCompolsoryCourses { get; set; }
+
+        [BindProperty]
+        public IList<ProgramCourse> AddedOptionalCourses { get; set; }
+
+        [BindProperty]
         public int DeleteId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -42,7 +54,15 @@ namespace Web.Areas.Admin.Pages.Programs
             }
             Program = await _db.Programs.GetById((int)id);
 
+            AddedCompolsoryCourses = Program.Courses
+                .Where(c => c.IsOptional == false)
+                .ToList();
+            AddedOptionalCourses = Program.Courses
+                .Where(c => c.IsOptional == true)
+                .ToList(); ;
+
             Courses = (await _db.Courses.GetAll()).ToList();
+
             ViewData["CoursesId"] =
                 new SelectList(
                     Courses,
@@ -98,10 +118,14 @@ namespace Web.Areas.Admin.Pages.Programs
             }
 
 
+            AddedCourses.IsOptional = false;
+            AddedCourses.ProgramId = Program.Id;
+
             var original = await _db.Programs.GetById(Program.Id);
             //var meta = original.Meta;
             //meta.Updated("sss");
-            original.SetValuesFrom(Program);
+            //original.SetValuesFrom(Program);
+            original.Courses.Add(AddedCourses);
             //original.Meta = meta;
 
             try
@@ -122,6 +146,7 @@ namespace Web.Areas.Admin.Pages.Programs
 
             return RedirectToPage("./EditCourse", new { id = Program.Id });
         }
+
 
 
         public async Task<IActionResult> OnPostOptionalCourseAsync()
@@ -131,10 +156,13 @@ namespace Web.Areas.Admin.Pages.Programs
                 return Page();
             }
 
+            AddedCourses.IsOptional = false;
+            AddedCourses.ProgramId = Program.Id;
+
             var original = await _db.Programs.GetById(Program.Id);
             //var meta = original.Meta;
             //meta.Updated("sss");
-            original.SetValuesFrom(Program);
+            original.Courses.Add(AddedCourses);
             //original.Meta = meta;
 
             try
@@ -158,11 +186,30 @@ namespace Web.Areas.Admin.Pages.Programs
         }
 
 
-        //public async Task<IActionResult> OnPostDeleteCourseAsync()
-        //{
+        public async Task<IActionResult> OnPostDeleteCourseAsync()
+        {
+            var original = await _db.Programs.GetById(Program.Id);
 
-        //    return RedirectToPage("./EditCourse", new { id = Program.Id });
-        //}
+            original.Courses.RemoveAll(x => x.CourseId == DeleteId);
+
+            try
+            {
+                await _db.CompleteAsync();
+            }
+            catch (Exception)
+            {
+                if (!await ProgramExistsAsync(Program.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("./EditCourse", new { id = Program.Id });
+        }
 
         private async Task<bool> ProgramExistsAsync(int id)
         {
