@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190309043548_Added_Semester_Alternate_Key")]
-    partial class Added_Semester_Alternate_Key
+    [Migration("20190327162506_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -39,15 +39,11 @@ namespace Data.Persistence.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("ProgramId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("MetaId");
-
-                    b.HasIndex("ProgramId");
 
                     b.ToTable("Courses");
                 });
@@ -79,6 +75,25 @@ namespace Data.Persistence.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("CourseEnrollment");
+                });
+
+            modelBuilder.Entity("Domain.CoursePrerequisite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<int>("PrerequisiteId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("PrerequisiteId");
+
+                    b.ToTable("CoursePrerequisite");
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -185,6 +200,27 @@ namespace Data.Persistence.Migrations
                     b.HasIndex("MetaId");
 
                     b.ToTable("Programs");
+                });
+
+            modelBuilder.Entity("Domain.ProgramCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<bool>("IsOptional");
+
+                    b.Property<int>("ProgramId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ProgramId");
+
+                    b.ToTable("ProgramCourse");
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -496,10 +532,6 @@ namespace Data.Persistence.Migrations
                     b.HasOne("Domain.Metadata", "Meta")
                         .WithMany()
                         .HasForeignKey("MetaId");
-
-                    b.HasOne("Domain.Program")
-                        .WithMany("Courses")
-                        .HasForeignKey("ProgramId");
                 });
 
             modelBuilder.Entity("Domain.CourseEnrollment", b =>
@@ -517,6 +549,19 @@ namespace Data.Persistence.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Domain.CoursePrerequisite", b =>
+                {
+                    b.HasOne("Domain.Course", "Course")
+                        .WithMany("Prerequisites")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Course", "Prerequisite")
+                        .WithMany()
+                        .HasForeignKey("PrerequisiteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -548,6 +593,19 @@ namespace Data.Persistence.Migrations
                     b.HasOne("Domain.Metadata", "Meta")
                         .WithMany()
                         .HasForeignKey("MetaId");
+                });
+
+            modelBuilder.Entity("Domain.ProgramCourse", b =>
+                {
+                    b.HasOne("Domain.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Program", "Program")
+                        .WithMany("Courses")
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Domain.Room", b =>

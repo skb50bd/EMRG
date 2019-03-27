@@ -27,8 +27,6 @@ namespace Data.Persistence.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<int?>("CourseId");
-
                     b.Property<int>("Credits");
 
                     b.Property<int>("DepartmentId");
@@ -40,8 +38,6 @@ namespace Data.Persistence.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
 
                     b.HasIndex("DepartmentId");
 
@@ -77,6 +73,25 @@ namespace Data.Persistence.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("CourseEnrollment");
+                });
+
+            modelBuilder.Entity("Domain.CoursePrerequisite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<int>("PrerequisiteId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("PrerequisiteId");
+
+                    b.ToTable("CoursePrerequisite");
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -187,23 +202,23 @@ namespace Data.Persistence.Migrations
 
             modelBuilder.Entity("Domain.ProgramCourse", b =>
                 {
-                    b.Property<int>("ProgramId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId");
 
-                    b.Property<int>("Id");
+                    b.Property<bool>("IsOptional");
 
-                    b.Property<bool>("IsRemoved");
+                    b.Property<int>("ProgramId");
 
-                    b.Property<string>("type");
-
-                    b.HasKey("ProgramId", "CourseId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("ProgramId");
 
-                    b.ToTable("ProgramCourses");
+                    b.ToTable("ProgramCourse");
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -507,10 +522,6 @@ namespace Data.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Course", b =>
                 {
-                    b.HasOne("Domain.Course")
-                        .WithMany("Prerequisites")
-                        .HasForeignKey("CourseId");
-
                     b.HasOne("Domain.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentId")
@@ -536,6 +547,19 @@ namespace Data.Persistence.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Domain.CoursePrerequisite", b =>
+                {
+                    b.HasOne("Domain.Course", "Course")
+                        .WithMany("Prerequisites")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Course", "Prerequisite")
+                        .WithMany()
+                        .HasForeignKey("PrerequisiteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -571,20 +595,15 @@ namespace Data.Persistence.Migrations
 
             modelBuilder.Entity("Domain.ProgramCourse", b =>
                 {
-                    b.HasOne("Domain.Course", "course")
-                        .WithMany("ProgramCourses")
+                    b.HasOne("Domain.Course", "Course")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Metadata", "Meta")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Domain.Program", "program")
-                        .WithMany("ProgramCourses")
+                    b.HasOne("Domain.Program", "Program")
+                        .WithMany("Courses")
                         .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
