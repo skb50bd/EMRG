@@ -59,23 +59,41 @@ namespace Data.Persistence
                         st => st.TimeSlots,
                         ts => ts.HasKey(t => t.Id)));
 
+
             builder.Entity<CourseEnrollment>()
                 .HasOne(c => c.Student)
-                .WithMany(s => s.Enrollments)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(s => s.Enrollments);
+ 
+
+
 
             builder.Entity<ProgramCourse>()
-            .HasKey(pc => new { pc.ProgramId, pc.CourseId });
+                .HasKey(pc => new { pc.ProgramId, pc.CourseId });
 
             builder.Entity<ProgramCourse>()
                 .HasOne(pc => pc.program)
                 .WithMany(p => p.ProgramCourses)
                 .HasForeignKey(pc => pc.ProgramId);
 
+
             builder.Entity<ProgramCourse>()
                 .HasOne(pc => pc.course)
                 .WithMany(c => c.ProgramCourses)
                 .HasForeignKey(pc => pc.CourseId);
+
+
+            //builder.Entity<CoursePrerequisite>()
+            //    .HasKey(cp => new { cp.courseId, cp.prerequisiteId });
+
+            //builder.Entity<CoursePrerequisite>()
+            //    .HasOne(cp => cp.course)
+            //    .WithMany(cp => cp.CoursePrerequisites)
+            //    .HasForeignKey(cp => cp.courseId);
+
+            //builder.Entity<CoursePrerequisite>()
+            //    .HasOne(cp => cp.prerequisite)
+            //    .WithMany(cp => cp.CoursePrerequisites)
+            //    .HasForeignKey(cp => cp.prerequisiteId);
 
             var metas =
                 builder.Model.GetEntityTypes().SelectMany(
@@ -96,5 +114,6 @@ namespace Data.Persistence
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<ProgramCourse> ProgramCourses{ get; set; }
+        //public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
     }
 }
