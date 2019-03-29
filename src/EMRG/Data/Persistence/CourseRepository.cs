@@ -24,6 +24,8 @@ namespace Data.Persistence
             => await Context.Set<Course>()
                         .Include(p => p.Prerequisites)
                             .ThenInclude(pc => pc.Course)
+                        .Include(c => c.Prerequisites)
+                            .ThenInclude(cp => cp.Prerequisite)
                         .FirstOrDefaultAsync(t => t.Id == id);
 
         public override async Task<IEnumerable<Course>> Get<T2>(
@@ -41,12 +43,18 @@ namespace Data.Persistence
                         .Include(f => f.Sections)
                         .Include(c => c.Prerequisites)
                                 .ThenInclude(p => p.Course)
+                         .Include(c => c.Prerequisites)
+                            .ThenInclude(cp => cp.Prerequisite)
                         .ToListAsync();
 
         public override async Task<IEnumerable<Course>> GetAll()
             => await Context.Courses
                         .Include(f => f.Department)
                         .Include(f => f.Sections)
+                        .Include(c => c.Prerequisites)
+                                .ThenInclude(p => p.Course)
+                         .Include(c => c.Prerequisites)
+                            .ThenInclude(cp => cp.Prerequisite)
                         .AsNoTracking()
                         .Where(e => !e.IsRemoved)
                         .ToListAsync();
