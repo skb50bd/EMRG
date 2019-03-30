@@ -54,7 +54,7 @@ namespace Web.Areas.DepartmentAdmin.Pages.Faculties
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            Faculty.DepartmentId = user.DepartmentId;
+            Faculty.DepartmentId = (int)user.DepartmentId;
             if (!ModelState.IsValid)
             {
 

@@ -1,40 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
+using Brotal.Extensions;
 
 using Data.Core;
 
 using Domain;
 
-using Brotal.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 
-
-namespace Web.Areas.DepartmentAdmin.Pages.Faculties
+namespace Web.Areas.DepartmentAdmin.Pages.Students
 {
     public class CreateModel : PageModel
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _db;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<CreateModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public CreateModel(
+            IMapper mapper,
             IUnitOfWork db,
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
             ILogger<CreateModel> logger,
             IEmailSender emailSender
             )
         {
+            _mapper = mapper;
             _db = db;
             _userManager = userManager;
             _logger = logger;
@@ -43,49 +47,60 @@ namespace Web.Areas.DepartmentAdmin.Pages.Faculties
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["DepartmentId"] = 
+            //ViewData["DepartmentId"] =
+            //    new SelectList(
+            //        await _db.Departments.GetAll(),
+            //        nameof(Department.Id),
+            //        nameof(Department.Name));
+            var user = await _userManager.GetUserAsync(User);
+
+            ViewData["ProgramId"] =
                 new SelectList(
-                    await _db.Departments.GetAll(), 
-                    nameof(Department.Id), 
-                    nameof(Department.Name));
+                    (await _db.Programs.GetAll()).Where(s => s.DepartmentId == user.DepartmentId),
+                    nameof(Domain.Program.Id),
+                    nameof(Domain.Program.Name));
             return Page();
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public StudentInputModel StudentInput { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var userDepartment = await _userManager.GetUserAsync(User);
-            Input.DepartmentId = (int)userDepartment.DepartmentId;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var faculty = new Faculty
-            {
-                FirstName = Input.FirstName,
-                LastName = Input.LastName,
-                Phone = Input.Phone,
-                Email = Input.Email,
-                Address = Input.Address,
-                DepartmentId = Input.DepartmentId,
-                Initial = Input.Initial,
-                Designation = Input.Designation
-            };
+            var program = await _db.Programs.GetById(StudentInput.ProgramId);
 
-            _db.Faculties.Add(faculty);
+            var sId = new StudentId
+            {
+                Year = DateTime.Today.Year,
+                Season = DateTime.Now.GetSeason(),
+                Program = program.Code
+            };
+            var students = await _db.Students.Get(
+                s => s.StudentId.AreBatchMates(sId),
+                s => s.StudentId.Roll);
+            sId.Roll = (students.FirstOrDefault()?.StudentId.Roll ?? 0) + 1;
+
+            var student = _mapper.Map<Student>(StudentInput);
+            student.AdmissionDate = DateTime.Today;
+            student.StudentId = sId;
+            student.DepartmentId = program.DepartmentId;
+            student.Meta = Metadata.Created(User.Identity.Name);
+
+            _db.Students.Add(student);
             await _db.CompleteAsync();
 
             // Create user
             var user = new AppUser
             {
-                Role = Role.Faculty,
-                UserName = faculty.Initial,
-                Email = faculty.Email
+                Role = Role.Student,
+                UserName = student.StudentId.ToString(),
+                Email = student.Email
             };
-
             //var password = Membership.GenerateRandomPassword(
             //    new Brotal.Extensions.PasswordOptions
             //    {
@@ -97,16 +112,14 @@ namespace Web.Areas.DepartmentAdmin.Pages.Faculties
             //        RequireNonAlphanumeric = true
             //    }
             //);
-
-            var password = "#Arefin555";
+            var password = "12345678";
 
             var result = await _userManager.CreateAsync(user, password);
-
             if (result.Succeeded)
             {
                 _logger.LogInformation(
-                    $"{User.Identity.Name} created a new Faculty user " +
-                    $"with id: {faculty.Initial}, " +
+                    $"{User.Identity.Name} created a new student user " +
+                    $"with id: {student.StudentId}, " +
                     $"password: {password}");
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -117,34 +130,18 @@ namespace Web.Areas.DepartmentAdmin.Pages.Faculties
                     protocol: Request.Scheme
                 );
 
-                await _emailSender.SendEmailAsync(faculty.Email, "Confirm your email",
+                await _emailSender.SendEmailAsync(student.Email, "Confirm your email",
                     $"Please confirm your account by " +
                     $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>" +
                     $"clicking here" +
                     $"</a>.<br/>" +
-                    $"Your Student Id/ Username: {faculty.Initial}" +
+                    $"Your Student Id/ Username: {student.StudentId}" +
                     $"Your password is: {password}");
 
                 //await _signInManager.SignInAsync(user, isPersistent: false);
             }
 
             return RedirectToPage("./Index");
-        }
-
-
-        public class InputModel : Person
-        {
-            [Required]
-            [Display(Name ="Initial")]
-            public string Initial { get; set; }
-
-            [Required]
-            [Display(Name = "Department")]
-            public int DepartmentId { get; set; }
-
-            [Required]
-            [Display(Name = "Designation")]
-            public string Designation { get; set; }
         }
     }
 }

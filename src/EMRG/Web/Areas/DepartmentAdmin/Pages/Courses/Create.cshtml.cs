@@ -29,7 +29,7 @@ namespace Web.Areas.DepartmentAdmin.Pages.Courses
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await UserManager.GetUserAsync(User);
-            Course.DepartmentId = user.DepartmentId;
+            Course.DepartmentId = (int)user.DepartmentId;
             if (!ModelState.IsValid)
             {
                 return Page();
