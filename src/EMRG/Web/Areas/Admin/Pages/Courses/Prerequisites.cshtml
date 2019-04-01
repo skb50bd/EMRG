@@ -3,6 +3,9 @@
 @{
 }
 
+
+<h1>Add Prerequisites</h1>
+
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -40,9 +43,9 @@
         @foreach (var course in Model.Course.Prerequisites)
         {
             <tr>
-                <td>@course.Course.Id</td>
-                <td>@course.Course.Name</td>
-                <td>@course.Course.Credits</td>
+                <td>@course.Prerequisite.Id</td>
+                <td>@course.Prerequisite.Name</td>
+                <td>@course.Prerequisite.Credits</td>
                 <td>
                     <form method="post">
                         <input type="hidden" asp-for="DeleteId" value="@course.Id" />

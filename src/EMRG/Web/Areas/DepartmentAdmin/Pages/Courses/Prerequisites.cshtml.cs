@@ -48,6 +48,15 @@ namespace Web.Areas.DepartmentAdmin.Pages.Courses
 
             Courses = (await _db.Courses.GetAll()).ToList();
 
+            List<Course> itemsToRemove = Courses.Where(x =>
+                          Course.Prerequisites.Select(y =>
+                          y.PrerequisiteId).Contains(x.Id)).ToList();
+
+            foreach (var item in itemsToRemove)
+            {
+                Courses.Remove(item);
+            }
+
             ViewData["CoursesId"] =
                 new SelectList(
                     Courses,

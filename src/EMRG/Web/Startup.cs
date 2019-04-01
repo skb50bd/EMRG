@@ -37,6 +37,13 @@ namespace Web
             var cnn = Configuration.GetConnectionString("DefaultConnection");
             services.ConfigureData(cnn);
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("SystemAdminRights", policy => policy.RequireRole("SysAdmin"));
+                options.AddPolicy("DepartmentAdminRights", policy => policy.RequireRole("DepartmentAdmin"));
+                options.AddPolicy("FacultyAdminRights", policy => policy.RequireRole("Faculty"));
+                options.AddPolicy("StudentAdminRights", policy => policy.RequireRole("Student"));
+            });
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(

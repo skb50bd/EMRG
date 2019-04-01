@@ -32,7 +32,7 @@ namespace Web.Areas.Admin.Pages.Courses
         public CoursePrerequisite Prerequisite { get; set; }
 
         [BindProperty]
-        public IList<Course> Courses { get; set; }
+        public List<Course> Courses { get; set; }
 
         [BindProperty]
         public int DeleteId { get; set; }
@@ -46,7 +46,20 @@ namespace Web.Areas.Admin.Pages.Courses
 
             Course = await _db.Courses.GetById((int)id);
 
-            Courses = (await _db.Courses.GetAll()).ToList();
+            Courses = (await _db.Courses.GetAll())
+                        .ToList();
+
+
+            List<Course> itemsToRemove = Courses.Where(x => 
+                            Course.Prerequisites.Select(y => 
+                            y.PrerequisiteId).Contains(x.Id)).ToList();
+
+            foreach(var item in itemsToRemove)
+            {
+                Courses.Remove(item);
+            }
+            
+
 
             ViewData["CoursesId"] =
                 new SelectList(
