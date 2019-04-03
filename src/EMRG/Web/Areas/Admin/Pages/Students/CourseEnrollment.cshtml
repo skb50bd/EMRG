@@ -6,34 +6,40 @@
 <h1>@Model.Student.FullName</h1>
 <br />
 
-<div class="form-group">
-    <label asp-for="Semesters" class="form-label"></label>
-    <select asp-for="Semester.Id" class="form-control" asp-items="ViewBag.SemesterId">
-    </select>
-</div>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Semesters" class="form-label"></label>
+        <select asp-for="Semester.Id" class="form-control" asp-items="ViewBag.SemesterId"
+                id="semesterDropDown"></select>
+    </div>
 
-<div class="form-group">
-    <label asp-for="Course" class="form-label"></label>
-    <select asp-for="Course.Id" class="form-control"
-            asp-items="ViewBag.CourseId" id="courseDropDown"
-            onchange="getSections()">
-        <option value="" disabled selected style="display:none;">Select Course</option>
-    </select>
-</div>
+    <div class="form-group">
+        <label asp-for="Course" class="form-label"></label>
+        <select asp-for="Course.Id" class="form-control"
+                asp-items="ViewBag.CourseId" id="courseDropDown"
+                onchange="getSections()">
+            <option value="" disabled selected style="display:none;">Select Course</option>
+        </select>
+    </div>
 
-<div class="form-group">
-    <label asp-for="Section" class="form-label"></label>
+    <div class="form-group">
+        <label asp-for="Section" class="form-label"></label>
 
-    <select asp-for="Section.Id" class="form-control"
-            id="sectionDropDown" onchange="getSeats()">
-        <option value="" disabled selected style="display:none;">Select Course</option>
-    </select>
-</div>
-<br />
-<div class="form-group">
-    <label class="form-label">Seats Available :</label>
-    <label class="form-label" id="seatCount"></label>
-</div>
+        <select asp-for="Enrollment.SectionId" class="form-control"
+                id="sectionDropDown" onchange="getSeats()">
+            <option value="" disabled selected style="display:none;">Select Course</option>
+        </select>
+    </div>
+    <br />
+    <div class="form-group">
+        <label class="form-label">Seats Available :</label>
+        <label class="form-label" id="seatCount"></label>
+    </div>
+    <br />
+    <input type="submit" value="Save" class="btn btn-primary" />
+
+    <input type="hidden" asp-for="Student.Id" />
+</form>
 <br />
 <table class="table table-striped table-hover" id="compolsoryTable">
     <thead class="thead-dark">
@@ -74,6 +80,8 @@
     </tbody>
 </table>
 
+
+
 <script>
     function getSections() {
         var dd = document.getElementById('courseDropDown');
@@ -93,10 +101,13 @@
 
                 console.log(data.sections);
                 (data.sections).forEach(function (section) {
-                    var option = document.createElement("option");
-                    option.value = section.id;
-                    option.text = section.number;
-                    output.add(option);
+                    let semdd = document.getElementById('semesterDropDown');
+                    if (section.id == semdd.value) {
+                        var option = document.createElement("option");
+                        option.value = section.id;
+                        option.text = section.number;
+                        output.add(option);
+                    }
                 })
             })
 

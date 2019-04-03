@@ -156,7 +156,7 @@ namespace Web.Areas.Admin.Pages.Programs
                 return Page();
             }
 
-            AddedCourses.IsOptional = false;
+            AddedCourses.IsOptional = true;
             AddedCourses.ProgramId = Program.Id;
 
             var original = await _db.Programs.GetById(Program.Id);

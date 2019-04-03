@@ -37,6 +37,9 @@ namespace Web.Areas.Admin.Pages.Students
         [BindProperty]
         public Semester Semester { get; set; }
 
+        [BindProperty]
+        public CourseEnrollment Enrollment { get; set; }
+
         public async Task<IActionResult> OnGet(int? id)
         {
             if(id == null)
@@ -61,6 +64,46 @@ namespace Web.Areas.Admin.Pages.Students
 
 
             return Page();
+        }
+
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            Enrollment.StudentId = Student.Id;
+
+            var original = await _db.Students.GetById(Student.Id);
+
+            original.Enrollments.Add(Enrollment);
+
+
+
+            try
+            {
+                await _db.CompleteAsync();
+            }
+            catch (Exception)
+            {
+                if (!await StudentExistsAsync(Student.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("./CourseEnrollment", new { id = Course.Id });
+        }
+
+        private async Task<bool> StudentExistsAsync(int id)
+        {
+            return await _db.Students.Exists(id);
         }
     }
 }
