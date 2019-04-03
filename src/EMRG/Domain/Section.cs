@@ -25,6 +25,8 @@ namespace Domain
         public virtual Course Course { get; set; }
 
         public  Schedule Schedule { get; set; }
+
+        public int Seat { get; set; }
     }
 
 }

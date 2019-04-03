@@ -9,6 +9,8 @@ namespace Domain
         public Season Season { get; set; }
         public int Year { get; set; }
 
+        public bool isActive { get; set; } = false;
+
         public override string ToString() => Name;
         public string Name => Season.ToString() + " " + Year;
     }

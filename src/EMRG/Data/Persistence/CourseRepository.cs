@@ -22,6 +22,8 @@ namespace Data.Persistence
 
         public override async Task<Course> GetById(int id)
             => await Context.Set<Course>()
+                        .Include(f => f.Department)
+                        .Include(f => f.Sections)
                         .Include(p => p.Prerequisites)
                             .ThenInclude(pc => pc.Course)
                         .Include(c => c.Prerequisites)
