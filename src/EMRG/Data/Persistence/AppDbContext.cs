@@ -37,6 +37,9 @@ namespace Data.Persistence
             builder.Entity<Semester>()
                 .HasAlternateKey(s => new { s.Season, s.Year });
 
+            builder.Entity<CourseEnrollment>()
+                .HasAlternateKey(s => new { s.StudentId, s.SectionId });
+
             builder.Entity<Room>()
                 .HasMany(r => r.Sections)
                 .WithOne(s => s.Room)
@@ -103,5 +106,6 @@ namespace Data.Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
     }
 }

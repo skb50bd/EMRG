@@ -53,6 +53,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Course.Credits)
             </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.Enrollment.Section.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=> model.Enrollment.Section.Semester.Season)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -64,15 +70,17 @@
                 <td>@enrollment.Section.Course.Code</td>
                 <td>@enrollment.Section.Course.Name</td>
                 <td>@enrollment.Section.Course.Credits</td>
+                <td>@enrollment.Section.Number</td>
+                <td>@enrollment.Section.Semester.Season @enrollment.Section.Semester.Year</td>
+
                 <td>
                     <form method="post">
-                        <input type="hidden" value="@enrollment.Section.Id" />
-                        <input type="hidden" asp-for="Course.Id" />
-
+                        <input type="hidden" asp-for="Enrollment.Id" value="@enrollment.Id" />
+                        <input type="hidden" asp-for="Student.Id" />
 
                         <input type="submit" value="Remove"
                                class="btn btn-primary btn-danger"
-                               asp-page-handler="DeleteCourse" />
+                               asp-page-handler="DeleteEnrollment" />
                     </form>
                 </td>
             </tr>

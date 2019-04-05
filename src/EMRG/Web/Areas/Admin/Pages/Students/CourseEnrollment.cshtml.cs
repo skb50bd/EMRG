@@ -98,8 +98,39 @@ namespace Web.Areas.Admin.Pages.Students
                 }
             }
 
-            return RedirectToPage("./CourseEnrollment", new { id = Course.Id });
+            return RedirectToPage("./CourseEnrollment", new { id = Student.Id });
         }
+
+
+        public async Task<IActionResult> OnPostDeleteEnrollmentAsync()
+        {
+            //var original = await _db.Students.GetById(Student.Id);
+
+            //original.Enrollments.RemoveAll(x => x.Id == Enrollment.Id);
+
+            await _db.CourseEnrollments.Delete(Enrollment.Id);
+
+            try
+            {
+                await _db.CompleteAsync();
+            }
+            catch (Exception)
+            {
+                if (!await StudentExistsAsync(Student.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("./CourseEnrollment", new { id = Student.Id });
+
+
+        }
+
 
         private async Task<bool> StudentExistsAsync(int id)
         {
