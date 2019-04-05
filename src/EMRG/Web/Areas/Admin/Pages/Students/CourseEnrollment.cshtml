@@ -102,7 +102,7 @@
                 console.log(data.sections);
                 (data.sections).forEach(function (section) {
                     let semdd = document.getElementById('semesterDropDown');
-                    if (section.id == semdd.value) {
+                    if (section.semesterId == semdd.value) {
                         var option = document.createElement("option");
                         option.value = section.id;
                         option.text = section.number;

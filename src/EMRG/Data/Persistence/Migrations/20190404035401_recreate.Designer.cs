@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190402135711_section_seats")]
-    partial class section_seats
+    [Migration("20190404035401_recreate")]
+    partial class recreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,9 +54,9 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Grade");
+                    b.Property<int?>("Grade");
 
-                    b.Property<float>("GradePoint");
+                    b.Property<float?>("GradePoint");
 
                     b.Property<bool>("IsRemoved");
 
@@ -293,9 +293,7 @@ namespace Data.Persistence.Migrations
 
                     b.Property<int>("Year");
 
-                    b.Property<bool>("hasEnded");
-
-                    b.Property<bool>("hasStarted");
+                    b.Property<bool>("isActive");
 
                     b.HasKey("Id");
 

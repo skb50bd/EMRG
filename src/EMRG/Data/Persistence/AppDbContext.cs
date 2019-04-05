@@ -54,6 +54,7 @@ namespace Data.Persistence
                     .WithMany(p => p.Students)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
             builder.Entity<Section>()
                 .OwnsOne(s => s.Schedule,
                     sc => sc.OwnsMany(

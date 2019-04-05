@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Data.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
@@ -22,12 +23,12 @@ namespace Web.Controllers
 
         // GET: api/Course
         [HttpGet]
-        public async Task<JsonResult> GetAsync()
+        public async Task<ActionResult<IEnumerable<Course>>> GetAsync()
         {
-            IList<Course> course = (await _db.Courses.GetAll())
+            var course = (await _db.Courses.GetAll())
                                     .ToList();
 
-            return new JsonResult(course);
+            return course;
         }
 
         // GET: api/Course/5

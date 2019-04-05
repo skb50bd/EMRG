@@ -9,19 +9,19 @@
         @{
             var user = await UserManager.GetUserAsync(User);
             var path = "";
-            if (user.Role == Role.SysAdmin)
+            if (user?.Role == Role.SysAdmin)
             {
                 path = "Admin";
             }
-            else if (user.Role == Role.DepartmentAdmin)
+            else if (user?.Role == Role.DepartmentAdmin)
             {
                 path = "DepartmentAdmin";
             }
-            else if (user.Role == Role.Faculty)
+            else if (user?.Role == Role.Faculty)
             {
                 path = "FacultyZone";
             }
-            else if (user.Role == Role.Student)
+            else if (user?.Role == Role.Student)
             {
                 path = "StudentZone";
             }
