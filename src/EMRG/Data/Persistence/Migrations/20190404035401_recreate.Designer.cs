@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190327162506_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190404035401_recreate")]
+    partial class recreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,9 +54,9 @@ namespace Data.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Grade");
+                    b.Property<int?>("Grade");
 
-                    b.Property<float>("GradePoint");
+                    b.Property<float?>("GradePoint");
 
                     b.Property<bool>("IsRemoved");
 
@@ -260,6 +260,8 @@ namespace Data.Persistence.Migrations
 
                     b.Property<int>("RoomId");
 
+                    b.Property<int>("Seat");
+
                     b.Property<int>("SemesterId");
 
                     b.HasKey("Id");
@@ -290,6 +292,8 @@ namespace Data.Persistence.Migrations
                     b.Property<int>("Season");
 
                     b.Property<int>("Year");
+
+                    b.Property<bool>("isActive");
 
                     b.HasKey("Id");
 
@@ -517,7 +521,11 @@ namespace Data.Persistence.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int?>("DepartmentId");
+
                     b.Property<int>("Role");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -777,6 +785,13 @@ namespace Data.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domain.AppUser", b =>
+                {
+                    b.HasOne("Domain.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
                 });
 #pragma warning restore 612, 618
         }

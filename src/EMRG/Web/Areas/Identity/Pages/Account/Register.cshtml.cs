@@ -41,9 +41,9 @@ namespace Web.Areas.Identity.Pages.Account
         public class InputModel
         {
 
-            //[Required]
-            //[Display(Name = "Username")]
-            //public string UserName { get; set; }
+            [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
 
             //[Required]
             //[Phone]
@@ -79,7 +79,7 @@ namespace Web.Areas.Identity.Pages.Account
                 AppUser user = new AppUser
                 {
                     Role = Input.Role,
-                    UserName = Input.Email,
+                    UserName = Input.UserName,
                     Email = Input.Email
                 };
 

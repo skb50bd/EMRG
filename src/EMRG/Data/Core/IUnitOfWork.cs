@@ -14,6 +14,7 @@ namespace Data.Core
         ITrackingRepository<Room> Rooms { get; }
         ITrackingRepository<Semester> Semesters { get; }
         ITrackingRepository<Section> Sections { get; }
+        IRepository<CourseEnrollment> CourseEnrollments { get; }
 
         void Complete();
 

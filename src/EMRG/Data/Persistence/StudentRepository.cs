@@ -33,9 +33,12 @@ namespace Data.Persistence
                        .OrderByDescending(order)
                        .Include(f => f.Department)
                        .Include(p => p.Program)
-                        .Include(s => s.Enrollments)
+                       .Include(s => s.Enrollments)
                             .ThenInclude(e => e.Section)
-                            .ThenInclude(s => s.Course)
+                            .ThenInclude(s => s.Semester)
+                       .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(e => e.Course)
                        .ToListAsync();
 
         public override async Task<IEnumerable<Student>> GetAll()
@@ -44,7 +47,10 @@ namespace Data.Persistence
                         .Include(p => p.Program)
                         .Include(s => s.Enrollments)
                             .ThenInclude(e => e.Section)
-                            .ThenInclude(s => s.Course)
+                            .ThenInclude(s => s.Semester)
+                        .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(e => e.Course)
                         .AsNoTracking()
                         .Where(e => !e.IsRemoved)
                         .ToListAsync();
@@ -55,7 +61,10 @@ namespace Data.Persistence
                         .Include(p => p.Program)
                         .Include(s => s.Enrollments)
                             .ThenInclude(e => e.Section)
-                            .ThenInclude(s => s.Course)
+                            .ThenInclude(s => s.Semester)
+                        .Include(s => s.Enrollments)
+                            .ThenInclude(e => e.Section)
+                            .ThenInclude(e => e.Course)
                         .FirstOrDefaultAsync(t => t.Id == id);
     }
 }
